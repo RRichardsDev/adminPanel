@@ -1,0 +1,19 @@
+li b{
+	font-weight: bold;
+	color: black;
+}
+#landingTitle {
+	font-size: 15rem; 
+	font-family: 'Trebuchet MS';
+}
+#landingVersion {
+	font-size: 1.5rem; 
+	font-family: 'Trebuchet MS'; 
+	color:gray;
+}
+
+#contour {
+	font-family: Arial;
+	font-weight: bold;
+	font-size: 2rem;
+}
