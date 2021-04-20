@@ -14,6 +14,10 @@ class ContourClient extends Model
         'address_1',
         'address_2',
         'address_postcode'
-
     ];
+
+    public function ContourInstance()
+    {
+        return $this->hasOne(ContourClient::class);
+    }
 }

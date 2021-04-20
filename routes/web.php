@@ -23,3 +23,8 @@ Route::get('client/edit/{clientID}', [App\Http\Controllers\ContourClientControll
 Route::post('client/edit/{clientID}', [App\Http\Controllers\ContourClientController::class, 'update'])->name('updateClient');
 Route::post('client/deleteclient', [App\Http\Controllers\ContourClientController::class, 'destroy'])->name('deleteClient');
 
+//Instance routes
+Route::get('instance/list', [App\Http\Controllers\InstanceController::class, 'index'])->name('listInstance');
+Route::get('instance/{instanceID}', [App\Http\Controllers\InstanceController::class, 'index'])->name('instance');
+
+
