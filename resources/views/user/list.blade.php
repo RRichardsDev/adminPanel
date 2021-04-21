@@ -15,47 +15,39 @@
                     @endif
                 <div class="container-fluid ">
                     
-
+                    @if(Auth::user()->admin)
                         <div class="m-2 text-right">      
                             <a href="{{route('createUser')}}"><button class="btn btn-primary">Create User</button></a>
                         </div>
+                    @endif 
                     
                     
-                    
-                    <table id="userList" class="table table-hover table-striped">
-                        <thead>
-                            <tr >
-                                <th scope="col">ID</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Phone Number</th>
-                                <th scope="col">Job Title</th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
-                             @foreach($users as $user)
-                                
-                                <th class="text-justify-centre align-middle nr" scope="row">{{$user->id}}</th>
-                                    <td class="text-justify-centre align-middle dynamName">{{$user->name}}</td>
-                                    <td class="text-justify-centre align-middle dynamEmail">{{$user->email}}</td>      
-                                    <td class="text-justify-centre align-middle dynamPhone">{{$user->phone}}</td>          
-                                    <td class="text-justify-centre align-middle dynamPos">Manager</td>
-                                    <td class="text-justify-centre align-middle">
-                                        <a href="{{route('editUser',$user->id)}}">
-                                            <button class="btn btn-outline-info btnEdit" name="edit">Edit</button>
-                                        </a>
-                                    </td>
-                                    <td class="text-justify-centre align-middle"><button class="btn btn-outline-danger btnDelete" name="delete">Delete</button></td>
-                                </tr>
-                                
-                            @endforeach
+                    <div class="row col-12 border-bottom p-2 ">
+        
+                        <div class="col-2">ID</div>
+                        <div class="col-4">Name</div>
+                        <div class="col-5">Email</div>                                
+                        <div class="col-1"></div>
 
-                        </tbody>
-                    </table>
-                    <input id="csrf" value='{{csrf_token()}}'></div>      
+                    </div>
+                    <div id="userList" class="row col-12 p-2 m-2">
+
+                        @foreach($users as $user)
+                            <div class="row col-12 border-bottom p-2">
+                                <div class="col-2 nr">{{$user->id}}</div>
+                                <div class="col-4 dynamName">{{$user->name}}</div>
+                                <div class="col-5 dynamEmail">{{$user->email}}</div>            
+                                <div class="col-1">
+                                    <a href="{{route('editUser',$user->id)}}">
+                                        <button class="btn btn-outline-info btn-sm btnEdit " name="edit">Edit</button>
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
+
+                        </div>
+                    </div>
+                    <input id="csrf" type="hidden" value='{{csrf_token()}}'></div>      
                 </div>
             </div>
         </div>

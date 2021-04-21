@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\ContourUser;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 
-class ContourUserController extends Controller
+class UserController extends Controller
 {
     public function __construct()
     {
@@ -15,7 +16,7 @@ class ContourUserController extends Controller
 
     public function index()
     {
-        $users = ContourUser::get();
+        $users = User::get();
         return view('user.list')->with('users', $users);
     }
 
@@ -27,44 +28,45 @@ class ContourUserController extends Controller
     public function store(Request $request)
     {
         
-        ContourUser::create([
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'email' => $request->email,
+        User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
         ]);
 
-        $users = ContourUser::get();
+        $users = User::get();
         return redirect()->route('listUser')->with('users', $users);
     }
 
     public function edit($id)
     {
-        $user = ContourUser::find($id);
+        $user = User::find($id);
         return view('user.edit')->with('user',$user);
     }
 
     public function update(Request $request, $id)
     {
-        $user = ContourUser::find($id);
+        $user = User::find($id);
         (isset($request->name)? $name = $request->name : $name = $user->name);
         (isset($request->email)? $email = $request->email : $email = $user->email);
-        (isset($request->phone)? $phone = $request->phone : $phone = $user->phone);
+       
         
         $user->update([
             'name' => $name,
             'email' => $email,
-            'phone' => $phone,
         ]);
 
-        $users = ContourUser::get();
+        $users = User::get();
         return redirect()->route('listUser')->with('users', $users);
     }
 
     public function destroy(Request $request)
     {
         $userId = $request->id;
-        $user = ContourUser::find($userId);
+        $user = User::find($userId);
 
         $user->delete();
+
+        return redirect()->route('listUser');
     }
 }

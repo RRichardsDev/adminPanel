@@ -2,6 +2,9 @@ li b{
 	font-weight: bold;
 	color: black;
 }
+
+a:link { text-decoration: none; }
+
 #landingTitle {
 	font-size: 15rem; 
 	font-family: 'Trebuchet MS';
@@ -18,6 +21,10 @@ li b{
 	font-size: 2rem;
 }
 
-#instanceList .row:hover{
+#clientList .row:hover{
+  background-color: #dcdcdc;
+}
+
+#userList .row:hover{
   background-color: #dcdcdc;
 }
