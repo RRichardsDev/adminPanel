@@ -29,7 +29,7 @@
                                 <th scope="col">Name</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Phone Number</th>
-                                <th scope="col">Position</th>
+                                <th scope="col">Job Title</th>
                                 <th scope="col"></th>
                                 <th scope="col"></th>
                             </tr>

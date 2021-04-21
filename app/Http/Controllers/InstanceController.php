@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\ContourClient;
 use App\Models\ContourUser;
 use App\Models\ContourInstance;
+use App\Models\ContourRoles;
+use App\Models\instance_user_role_pivot;
 
 
 class InstanceController extends Controller
@@ -21,12 +23,13 @@ class InstanceController extends Controller
      */
     public function index()
     {
-        // $instance = ContourInstance::with('ContourClient')->find(1);
         $instanceList = ContourInstance::get();
+
+        $clientList = ContourClient::get();
         $instance = ContourInstance::with('client')->find(2);
 
-        return view('instance.list')->with('instance', $instance)
-                                    ->with('instances', $instanceList);
+        return view('instance.list')->with('instances', $instanceList)
+                                    ->with('clients', $clientList);
        
     }
 
@@ -38,7 +41,19 @@ class InstanceController extends Controller
      */
     public function create()
     {
-        //
+        $clientId = $_POST['selectedClient'];
+        $client = ContourClient::find($clientId);
+        $roles = ContourRoles::get();
+
+
+        $users = ContourUser::get();
+
+        ContourInstance::create([
+            "client_id" => $clientId,
+        ]);
+        return view('instance.create')->with('client', $client)
+                                        ->with('users', $users)
+                                            ->with('roles', $roles);
     }
 
     /**
@@ -49,7 +64,15 @@ class InstanceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $instanceId = '2';
+        $userId = "1";
+        $roleId = "2";
+
+        instance_user_role_pivot::create([
+            'instance_id' => $instanceId,
+            'user_id' => $userId,
+            'role_id' => $roleId,
+        ]);
     }
 
     /**
@@ -60,7 +83,12 @@ class InstanceController extends Controller
      */
     public function show($id)
     {
-        //
+        $instance = ContourInstance::find($id);
+        $users = ContourUser::get();
+
+
+        return view('instance.show')->with('instance', $instance)
+                                    ->with('users', $users);
     }
 
     /**
@@ -96,4 +124,17 @@ class InstanceController extends Controller
     {
         //
     }
+
+    public function byID(Request $request)
+    {
+
+        $user = ContourUser::find(6);
+        $data = $user['name'];
+        // dd($data);
+        // dd($user);
+
+        echo ($data);
+        
+    }
+
 }

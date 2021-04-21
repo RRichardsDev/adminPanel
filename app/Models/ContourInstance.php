@@ -10,6 +10,11 @@ use App\Models\ContourUser;
 
 class ContourInstance extends Model
 {
+	   protected $fillable = [
+        'client_id',
+        'user_id',
+        
+    ];
 	public function client() {
 	    return $this->hasOne(ContourClient::class, 'id');
 	}

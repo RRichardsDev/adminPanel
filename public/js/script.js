@@ -5,11 +5,8 @@ $( document ).ready(function() {
    	userName = $(this).closest('tr').find(".dynamName").text()
    	if (confirm('Are you sure you want to DELETE ' + userName + "'s user account?"))
    	{
-   		status = deleteUser(userId, userName)
-         if(status==true){
+   		deleteUser(userId, userName)
             $(this).closest('tr').remove()
-         }
-   		
    	} 
    });
 
@@ -18,40 +15,58 @@ $( document ).ready(function() {
       clientName = $(this).closest('tr').find(".dynamName").text()
       if (confirm('Are you sure you want to DELETE ' + clientName + "'s user account?"))
       {
-         status = deleteClient(clientId, clientName)
-         if(status == true ){
-            $(this).closest('tr').remove()
-         }
+         deleteClient($(this), clientId, clientName)
+         $(this).closest('tr').remove()
       } 
    });
+
+   $('#addUserToInstance').click(function(e){
+      e.preventDefault()
+      user = $('#selectedUser option:selected').text()
+      role = $('#selectedRole option:selected').text()
+      addUserToInstanceAjax(6)
+
+      $( "#createInstanceUserList" ).append( "<div class='row border-top p-2'> <div class='col-6'>"+ user +"</div> <div class='col-6'>"+role+"</div>" );
+      
+   })
 });
+
+function addUserToInstanceAjax(id) {
+   csrf = $('#csrf').val()
+   id = 6
+   $.ajax({
+      type:'POST',
+      url:'/instance/store',
+      data: {
+            id:id,
+            _token:csrf,
+         },
+      success:function(data) {
+         alert('stored')
+         return 1;
+      },  
+   });
+}
 
 function deleteUser(id, name) {
 	csrf = $('#csrf').val()
    $.ajax({
       type:'POST',
-      url:'/user/deleteUser',
+      url:'/instance/deleteUser',
       data: {
       		id:id,
       		_token:csrf,
       	},
       success:function(data) {
          alert(name+ ' has been deleted from the system!')
-         return true
-      },
-      error: function (e) {
-         alert("There has been an error! " + name + " has not been deleted!");
-         console.log(e)
-         return false
-      },
-      
+         return 1;
+      },  
    });
 }
 
 function deleteClient(id, name) {
    csrf = $('#csrf').val()
 
-   alert()
    $.ajax({
       type:'POST',
       url:'/client/deleteclient',
@@ -65,7 +80,7 @@ function deleteClient(id, name) {
       error: function (e) {
          alert("There has been an error! " + name + " has not been deleted!")
          console.log(e)
-         return false
+         return 1;
       },
    });
 }

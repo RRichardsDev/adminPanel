@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateContourInstancesTable extends Migration
+class CreateInstanceUserRolePivotsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateContourInstancesTable extends Migration
      */
     public function up()
     {
-        Schema::create('contour_instances', function (Blueprint $table) {
+        Schema::create('instance_user_role_pivots', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('instance_id')->references('id')->on('contour_instances');
             $table->foreignId('user_id')->references('id')->on('contour_users');
-            $table->foreignId('client_id')->references('id')->on('contour_clients');
-
+            $table->foreignId('role_id')->references('id')->on('contour_roles');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateContourInstancesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contour_instances');
+        Schema::dropIfExists('instance_user_role_pivots');
     }
 }

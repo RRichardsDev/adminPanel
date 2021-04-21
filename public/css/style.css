@@ -17,3 +17,7 @@ li b{
 	font-weight: bold;
 	font-size: 2rem;
 }
+
+#instanceList .row:hover{
+  background-color: #dcdcdc;
+}

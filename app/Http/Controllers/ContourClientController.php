@@ -53,13 +53,17 @@ class ContourClientController extends Controller
         (isset($request->name)? $name = $request->name : $name = $client->name);
         (isset($request->email)? $email = $request->email : $email = $client->email);
         (isset($request->phone)? $phone = $request->phone : $phone = $client->phone);
-        (isset($request->address)? $address = $request->address : $address = $client->address);
+        (isset($request->address_1)? $address_1 = $request->address_1 : $address_1 = $client->address_1);
+        (isset($request->address_2)? $address_2 = $request->address_2 : $address_2 = $client->address_2);
+        (isset($request->address_postcode)? $address_postcode = $request->address_postcode : $address_postcode = $client->address_postcode);
         
         $client->update([
             'name' => $name,
             'email' => $email,
             'phone' => $phone,
-            'address' => $address
+            'address_1' => $address_1,
+            'address_2' => $address_2,
+            'address_postcode' => $address_postcode,
         ]);
 
         $clients = ContourClient::get();

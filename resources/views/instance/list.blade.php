@@ -8,45 +8,36 @@
                 <div class="card-header"><h2><span id="contour">Contour</span> Instances</h2></div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
                 <div class="container-fluid ">
-                    
+                    <form method="post" action="{{route('createInstance')}}">
+                        @csrf
+                       <div class="mb-4 input-group">
+                            <select class="custom-select" name="selectedClient">
+                                @foreach($clients as $client)
+                                    <option value={{$client->id}}>{{$client->name}}</option>
+                                @endforeach
+                            </select> 
+                           <button class="btn btn-primary input-group-append" type="submit">Create Instance</button></a>
+                       </div>
+                    </form>
+                  	<div class="row border-bottom pb-2">
+	                        <div class="col-md-2">ID</div>
+	                        <div class="col">Client</div>
 
-                        <div class="m-2 text-right">      
-                            <a href="{{route('createUser')}}"><button class="btn btn-primary">Create Instance</button></a>
-                        </div>
+                    </div>
                     
-                    
-                    
-                    <table id="userList" class="table table-hover table-striped">
-                        <thead>
-                            <tr >
-                                <th scope="col">ID</th>
-                                <th scope="col">Client</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
-                             @foreach($instances as $instance)
-                             <div>
-                                <a href="{{route('instance',$instance->id)}}">
-                                <tr>
-                                	<th class="text-justify-centre align-middle nr" scope="row">{{$instance->id}}</th>
-                                    <td class="text-justify-centre align-middle dynamEmail">{{$instance->client->name}}</td>              
-                               
-                                </tr>
-                            </a></div>	
-                                
-                                
-                            @endforeach
-
-                        </tbody>
-                    </table>
-                    <input id="csrf" value='{{csrf_token()}}'></div>      
+                    <div id="instanceList" >
+                        
+                         @foreach($instances as $instance)
+  
+                            <a href="{{route('instance',$instance->id)}}"><div class="row border-bottom p-2">
+                            	<div class="col-md-2 ">{{$instance->id}}</div>
+                                <div class="col ">{{-- {{$instance->client->name}} --}}</div>        
+                           </div></a>                        
+                           
+                        @endforeach
+                    </div>
+                    <input type="hidden"id="csrf" value='{{csrf_token()}}'></div>      
                 </div>
             </div>
         </div>

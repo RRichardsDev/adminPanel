@@ -3,9 +3,11 @@
 use Illuminate\Support\Facades\Route;
 // use App\Models\ContourUser;
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
+Route::get('/', [App\Http\Controllers\ContourUserController::class, 'index'])->name('listUser');
 
 Auth::routes();
+
+Route::get('instance/api/search/user/{id}', [App\Http\Controllers\InstanceController::class, 'byID']);
 
 // User Routes
 Route::get('user/list', [App\Http\Controllers\ContourUserController::class, 'index'])->name('listUser');
@@ -24,7 +26,15 @@ Route::post('client/edit/{clientID}', [App\Http\Controllers\ContourClientControl
 Route::post('client/deleteclient', [App\Http\Controllers\ContourClientController::class, 'destroy'])->name('deleteClient');
 
 //Instance routes
+Route::get('instance/store', [App\Http\Controllers\InstanceController::class, 'store'])->name('storeInstance');
 Route::get('instance/list', [App\Http\Controllers\InstanceController::class, 'index'])->name('listInstance');
-Route::get('instance/{instanceID}', [App\Http\Controllers\InstanceController::class, 'index'])->name('instance');
+Route::get('instance/{instanceID}', [App\Http\Controllers\InstanceController::class, 'show'])->name('instance');
+Route::post('instance/create', [App\Http\Controllers\InstanceController::class, 'create'])->name('createInstance');
+Route::post('instance/store', [App\Http\Controllers\InstanceController::class, 'store'])->name('storeInstance');
+
+//UserFunctionCalls
+
+
+
 
 

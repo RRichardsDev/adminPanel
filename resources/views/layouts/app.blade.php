@@ -57,7 +57,7 @@
                         @else
                             <li class="nav-item"><a id="navbarDropdown" class="nav-link" href="{{route('listUser')}}">Users</a></li>
                             <li class="nav-item"><a id="navbarDropdown" class="nav-link" href="{{route('listClient')}}">Clients</a></li>                            
-                            <li class="nav-item"><a id="navbarDropdown" class="nav-link" href="#">Instances</a></li>
+                            <li class="nav-item"><a id="navbarDropdown" class="nav-link" href="{{route('listInstance')}}">Instances</a></li>
                             <li class="nav-item"><a id="navbarDropdown" class="nav-link" href="#"> </a></li>
                             <li class="nav-item dropdown">
 

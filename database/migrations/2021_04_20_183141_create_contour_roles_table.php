@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UserRoles extends Migration
+class CreateContourRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class UserRoles extends Migration
      */
     public function up()
     {
-        Schema::create('user_roles', function (Blueprint $table) {
-            $table->id();
+        Schema::create('contour_roles', function (Blueprint $table) {
+             $table->id();
             $table->string('name'); //Admin, Team Leader, Basic user
         //Permissions
             $table->boolean('p_1'); //Upload data
@@ -34,7 +34,7 @@ class UserRoles extends Migration
             $table->boolean('p_15');
 
         });
-    } 
+    }
 
     /**
      * Reverse the migrations.
@@ -43,6 +43,6 @@ class UserRoles extends Migration
      */
     public function down()
     {
-         Schema::dropIfExists('user_roles');
+        Schema::dropIfExists('contour_roles');
     }
 }
