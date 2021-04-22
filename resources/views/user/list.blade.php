@@ -8,11 +8,6 @@
                 <div class="card-header"><h2><span id="contour">Contour</span> Users</h2></div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
                 <div class="container-fluid ">
                     
                     @if(Auth::user()->admin)
@@ -22,7 +17,7 @@
                     @endif 
                     
                     
-                    <div class="row col-12 border-bottom p-2 ">
+                    <div class="row col-12 border-bottom ">
         
                         <div class="col-2">ID</div>
                         <div class="col-4">Name</div>
@@ -30,7 +25,7 @@
                         <div class="col-1"></div>
 
                     </div>
-                    <div id="userList" class="row col-12 p-2 m-2">
+                    <div id="userList" class="row col-12 px-2 mx-2 ">
 
                         @foreach($users as $user)
                             <div class="row col-12 border-bottom p-2">
@@ -38,9 +33,11 @@
                                 <div class="col-4 dynamName">{{$user->name}}</div>
                                 <div class="col-5 dynamEmail">{{$user->email}}</div>            
                                 <div class="col-1">
-                                    <a href="{{route('editUser',$user->id)}}">
-                                        <button class="btn btn-outline-info btn-sm btnEdit " name="edit">Edit</button>
-                                    </a>
+                                    @if(Auth::user()->admin)
+                                        <a href="{{route('editUser',$user->id)}}">
+                                            <button class="btn btn-outline-info btn-sm btnEdit " name="edit">Edit</button>
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
                         @endforeach

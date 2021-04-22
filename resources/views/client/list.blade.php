@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header"><h2><span id="contour">Contour</span> Instances</h2></div>
+                <div class="card-header"><h2><span id="contour">Contour</span> Clients</h2></div>
 
                 <div class="card-body">
 
@@ -21,7 +21,7 @@
                         
                          @foreach($clients as $client)
   
-                            <a href="{{route('client',$client->id)}}"><div class="row border-bottom p-2 hover">
+                            <a href="{{route('showClient',$client->id)}}"><div class="row border-bottom p-2 hover">
                             	<div class="col-md-2 ">{{$client->id}}</div>
                                 <div class="col ">{{$client->name}}</div>        
                            </div></a>                        

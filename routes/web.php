@@ -17,18 +17,12 @@ Route::get('user/edit/{userID}', [App\Http\Controllers\UserController::class, 'e
 Route::post('user/edit/{userID}', [App\Http\Controllers\UserController::class, 'update'])->name('updateUser');
 Route::post('user/deleteUser', [App\Http\Controllers\UserController::class, 'destroy'])->name('deleteUser');
 
-// // Client Routes
-// Route::get('client/list', [App\Http\Controllers\ContourClientController::class, 'index'])->name('listClient');
-// Route::get('client/create', [App\Http\Controllers\ContourClientController::class, 'create'])->name('createClient');
-// Route::post('client/create', [App\Http\Controllers\ContourClientController::class, 'store'])->name('storeClient');
-// Route::get('client/edit/{clientID}', [App\Http\Controllers\ContourClientController::class, 'edit'])->name('editClient');
-// Route::post('client/edit/{clientID}', [App\Http\Controllers\ContourClientController::class, 'update'])->name('updateClient');
-// Route::post('client/deleteclient', [App\Http\Controllers\ContourClientController::class, 'destroy'])->name('deleteClient');
-
 // //Instance routes
 // Route::get('instance/store', [App\Http\Controllers\InstanceController::class, 'store'])->name('storeInstance');
 Route::get('client/list', [App\Http\Controllers\ClientController::class, 'index'])->name('listClient');
-Route::get('client/{instanceID}', [App\Http\Controllers\ClientController::class, 'show'])->name('client');
+Route::get('client/{clientID}', [App\Http\Controllers\ClientController::class, 'show'])->name('showClient');
+Route::get('client/{clientID}/user/{userID}', [App\Http\Controllers\ClientController::class, 'showUser'])->name('clientShowUser');
+Route::post('client/{clientID}/user/add', [App\Http\Controllers\ClientController::class, 'addUser'])->name('clientAddUser');
 // Route::post('instance/create', [App\Http\Controllers\ClientController::class, 'create'])->name('createInstance');
 // Route::post('instance/store', [App\Http\Controllers\ClientController::class, 'store'])->name('storeInstance');
 

@@ -12,4 +12,21 @@ class Role extends Model
     	'description',
     ];
 
+        
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'client_user');
+    }
+
+    public function permissions()
+    {
+    	return $this->belongsToMany(Permission::class);
+    }
+
+    public function permission_roles()
+    {
+        return $this->belongsToMany(PermissionRole::class);
+    }
+
+
 }

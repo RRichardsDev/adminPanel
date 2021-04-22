@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Client;
 use Illuminate\Support\Facades\Hash;
 
 
 class UserController extends Controller
 {
+    
     public function __construct()
     {
         $this->middleware('auth');
@@ -48,6 +50,13 @@ class UserController extends Controller
     {
         $user = User::find($id);
         (isset($request->name)? $name = $request->name : $name = $user->name);
+        // if(isset($request->email)){
+        //     $email = $request->email;
+        //     dd(1);
+        // }else{
+        //     $email = $user->email;
+        //     dd(2);
+        // }
         (isset($request->email)? $email = $request->email : $email = $user->email);
        
         
@@ -64,7 +73,12 @@ class UserController extends Controller
     {
         $userId = $request->id;
         $user = User::find($userId);
-
+        $clients = Client::get();
+        
+        foreach($clients as $client){
+             $client->users()->detach($userId);
+        }
+       
         $user->delete();
 
         return redirect()->route('listUser');

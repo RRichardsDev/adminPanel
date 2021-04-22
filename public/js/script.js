@@ -1,20 +1,43 @@
 $( document ).ready(function() {
+
+  $('#addUserToInstance').click(function(){
+    setTimeout(
+      function() 
+      {
+       if($('#status')){
+          alert(1)
+        }
+      }, 3000);
+  })
+
     
    $("#deleteUser").click( function (e) {
-
+    
       e.preventDefault(e)
-      $('#editUserForm').attr('action', "/user/deleteUser").submit();
-   	
-      userName = $('#userName').val()
-      userID = $('#userID').val()
-   	if (confirm('Are you sure you want to delete this user?'))
-   	{
-   		deleteUser(userID, userName)
-           
-   	} 
-
-   });
+      
+      if(($('#userName').val()))
+      {
+        userName = $('#userName').val()
+      }else{
+        userName = $('#editUserName').attr('placeholder')
+      }
+      confirmDeleteUser(userName);
 })
+   $(document.body).on('click',"#confrimDelete",function(){
+      $('#editUserForm').attr('action', "/user/deleteUser").submit();
+   })
+})
+
+function confirmDeleteUser(username){
+  if(!$('#confirmAlert').length){
+    $('#alertDelete').append('<div id="confirmAlert" class="alert alert-danger" role="alert"> \
+                              <p> Confirm deleteing <b>'+ userName +'</b> from the system! </p>\
+                                <div class="text-center"><button class="btn btn-danger col-3" id="confrimDelete">Confim</button></div>\
+                                </div>'
+                            )
+  }
+  
+}
 
 //    $("#clientList").on('click', '.btnDelete', function () {
 //       clientId = $(this).closest('tr').find(".nr").text()
@@ -54,21 +77,21 @@ $( document ).ready(function() {
 //    });
 // }
 
-function deleteUser(id, name) {
-	csrf = $('#csrf').val()
-   $.ajax({
-     type: "GET",
-     url: '/user/deleteUser',
-     data: {id:id,
-            _token:csrf
-         },
-     success: function(data){
-       alert(data + ' has been deleted from the system!')
-       window.location.href('/user/list')
-     },
+// function deleteUser(id, name) {
+// 	csrf = $('#csrf').val()
+//    $.ajax({
+//      type: "GET",
+//      url: '/user/deleteUser',
+//      data: {id:id,
+//             _token:csrf
+//          },
+//      success: function(data){
+//        alert(data + ' has been deleted from the system!')
+//        window.location.href('/user/list')
+//      },
      
-   });
-}
+//    });
+// }
 
 function deleteClient(id, name) {
    csrf = $('#csrf').val()

@@ -26,7 +26,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ Route('listUser') }}">
+                <a class="navbar-brand" href="{{ Route('listClient') }}">
                       admin<b>Panel</b> 
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -55,8 +55,9 @@
                                 </li>
                             @endif
                         @else
+                            <li class="nav-item"><a id="navbarDropdown" class="nav-link" href="{{route('listClient')}}">Clients</a></li>
                             <li class="nav-item"><a id="navbarDropdown" class="nav-link" href="{{route('listUser')}}">Users</a></li>
-                            <li class="nav-item"><a id="navbarDropdown" class="nav-link" href="{{route('listClient')}}">Clients</a></li>                            
+                                                        
                             {{-- <li class="nav-item"><a id="navbarDropdown" class="nav-link" href="{{route('listInstance')}}">Instances</a></li> --}}
                             <li class="nav-item"><a id="navbarDropdown" class="nav-link" href="#"> </a></li>
                             <li class="nav-item dropdown">
