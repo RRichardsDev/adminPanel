@@ -7,10 +7,15 @@ use App\Models\Client;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\PermissionRole;
+use App\Models\ClientUserRoles;
 
 
 class ClientController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +23,6 @@ class ClientController extends Controller
      */
     public function index()
     {
-        
         $clients = Client::get();
 
         return view('client.list')->with('clients', $clients);
@@ -76,45 +80,83 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-
         //fetches all users 
         $users = User::get();
         //fetches all roles
         $roles = Role::get();
         //gets client with user model
         $client = Client::with('users')->find($id);
+        $uniqueUsers = $client->users->unique();
 
-        // dd($client->users->pivot->permission_role_id);
 
-        // foreach($client->users as $user){
-        //     $permission_role_id =  $user->pivot->permission_role_id;
+        // $permissions = Role::with('permissions')->find(1);
 
-        //     $role = Role::with('permissions')->find($permission_role_id);
-        
-        // };
+        // return $permissions;
 
-        return $client;
+        // return $client;
            
-        // return view('client.show')->with('client', $client)
-        //                             ->with('users', $users)
-        //                                 ->with('roles', $roles);
+        return view('client.show')->with('client', $client)
+                                    ->with('userList', $users)
+                                    ->with('uniqueUsers', $uniqueUsers);
                                             
     }
 
-    public function getRoleById($permission_role_id)
-    {
-        $role = Role::find($permission_role_id);
-
-        return $role;
-    }
     public function showUser($clientId, $userId)
     {
-        $client = Client::with('users')->find($clientId);
-        $user = $client->users->find($userId);
+        
         $roles = Role::get();
+        $allRoles = Role::get();
+        //Get Cleint with associated User
+       
+        $client = Client::with('users')->find($clientId);
+        //Select user to display
+        $user = $client->users->where('id', 5);
+
+        // Working
+        // ---------------------------------------------------------------
+
+        foreach($client->users->where('id', 5) as $userRole){
+            // roles[] = $userRole->pivot->permission_role_id;
+        };
+        // dd($roles);
+
+
+        // ---------------------------------------------------------------
+
+
+
+        // dd($user->pivot->permission_role_id);
+        // dd($user);
+        // foreach ($client->users->where('id', $userId) as $user){
+        //     $roles[] = $user->pivot->permission_role_id;
+        // };
+        
+        // dd($roles);
+        //get the Associated permission/role relation
+        // dd($client);
+        $permission_role_id =  1;
+        //get all asssociated permission roles
+        // $permissionRoles = PermissionRole::where('id', $permission_role_id)->get();
+
+        // dd($permissionRoles);
+        // foreach($permissionRoles as $role){
+        //    $ids[] = $role->role_id;
+        // };
+
+        // $roles = Role::with('permissions')->whereIn('id', $ids)->get();
+
+        // dd($roles);
+        // $permission_role_id =  $user->pivot->permission_role_id;
+
+        // $permissionRoles = User::with('roles')->get();
+        // with('roles')->find($permission_role_id);
+        // $roles = Role::with('permissions')->find($permission_role_id);
+        // dd($roles);
+
         return view('client.userShow')->with('client', $client)
                                     ->with('user', $user)
-                                        ->with('roles', $roles);
+                                    ->with('allRoles', $allRoles)
+                                    ->with('roles', $roles);
     }
 
     /**

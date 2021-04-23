@@ -49,11 +49,7 @@
                                 </li>
                             @endif
                             
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
+                            
                         @else
                             <li class="nav-item"><a id="navbarDropdown" class="nav-link" href="{{route('listClient')}}">Clients</a></li>
                             <li class="nav-item"><a id="navbarDropdown" class="nav-link" href="{{route('listUser')}}">Users</a></li>

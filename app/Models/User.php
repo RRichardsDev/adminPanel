@@ -7,27 +7,23 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\PermissionRole;
+use App\Models\ClientUserRole;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-
-    public function clients()
+    public function client()
     {
         return $this->belongsToMany(Client::class)
-            ->withTimestamps()
-                ->withPivot(['permission_role_id']);
-    }
-    public function role()
-    {
-        return $this->belongsToMany(Role::class, 'permission_role');
+                ->withPivot(['permission_role_id']);                        
+
     }
     public function permission_roles()
     {
-        return $this->belongsToMany(PermissionRole::class, 'client_user');
+        return $this->belongsToMany(PermissionRole::class, 'client_user', 'user_id', 'permission_role_id');
     }
-
+    
 
     /**
      * The attributes that are mass assignable.

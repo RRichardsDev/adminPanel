@@ -7,14 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class PermissionRole extends Model
 {
-    use HasFactory;
+    public function clients()
+    {
+        return $this->belongsToMany(Client::class, 'client_user', 'permission_role_id', 'client_id');
+    }
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'client_user');
-    }
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(User::class, 'client_user', 'permission_role_id', 'user_id');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateClientUserTable extends Migration
+class ClientUser extends Migration
 {
     /**
      * Run the migrations.
@@ -14,12 +14,10 @@ class CreateClientUserTable extends Migration
     public function up()
     {
         Schema::create('client_user', function (Blueprint $table) {
-            $table->id();
             $table->foreignId('client_id')->constrained();
             $table->foreignId('user_id')->constrained();
-
             $table->unsignedBigInteger('permission_role_id');
-            $table->foreign('permission_role_id')->references('id')->on('permission_role');
+            $table->foreign('permission_role_id')->references('role_id')->on('permission_roles');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateClientUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('client_user');
+         Schema::dropIfExists('client_user');
     }
 }

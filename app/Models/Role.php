@@ -11,22 +11,21 @@ class Role extends Model
     	'name',
     	'description',
     ];
-
         
     public function users()
     {
-        return $this->belongsToMany(User::class, 'client_user');
+        return $this->belongsToMany(User::class, 'client_user',);
     }
 
     public function permissions()
     {
-    	return $this->belongsToMany(Permission::class);
+    	return $this->belongsToMany(Permission::class, 'permission_roles', 'role_id', 'permission_id');
     }
 
-    public function permission_roles()
-    {
-        return $this->belongsToMany(PermissionRole::class);
-    }
+    // public function permission_roles()
+    // {
+    //     return $this->belongsToMany(PermissionRole::class, 'client_user', 'user_id', 'permission_roles_id');
+    // }
 
 
 }
