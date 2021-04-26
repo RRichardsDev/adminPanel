@@ -19,15 +19,17 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
+    <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-dark navbar-expand-md  shadow-sm dark-nav-color">
             <div class="container">
                 <a class="navbar-brand" href="{{ Route('listClient') }}">
-                      admin<b>Panel</b> 
+                      adminPanel
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -51,14 +53,14 @@
                             
                             
                         @else
-                            <li class="nav-item"><a id="navbarDropdown" class="nav-link" href="{{route('listClient')}}">Clients</a></li>
-                            <li class="nav-item"><a id="navbarDropdown" class="nav-link" href="{{route('listUser')}}">Users</a></li>
+                            <li class="nav-item"><a id="navbarDropdown" class="nav-link text-white" href="{{route('listClient')}}">Clients</a></li>
+                            <li class="nav-item"><a id="navbarDropdown" class="nav-link text-white" href="{{route('listUser')}}">Users</a></li>
                                                         
                             {{-- <li class="nav-item"><a id="navbarDropdown" class="nav-link" href="{{route('listInstance')}}">Instances</a></li> --}}
                             <li class="nav-item"><a id="navbarDropdown" class="nav-link" href="#"> </a></li>
                             <li class="nav-item dropdown">
 
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
 

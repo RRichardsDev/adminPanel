@@ -16,24 +16,14 @@ class ClientController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $clients = Client::get();
-
         return view('client.list')->with('clients', $clients);
                                     
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
@@ -45,39 +35,28 @@ class ClientController extends Controller
         $userID = $request->selectedUser;
         $clientID = $request->clientID;
 
+        //Gets Client/User
         $user = User::find($userID);
         $client = Client::find($clientID);
-
+        //Checks if user already has an insatnce with the client
         if($client->users()->find($userID) == NULL)
         {
             $client->users()->attach($user);
         }else{
             $status = '1';
         };
-        
+        //Gets all clients
         $clients = Client::get();
         return redirect()->route('showClient', $clientID)->with('clients', $clients)
                                                             ->with('status', $status);
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //fetches all users 
@@ -88,13 +67,6 @@ class ClientController extends Controller
         $client = Client::with('users')->find($id);
         $uniqueUsers = $client->users->unique();
 
-
-        // $permissions = Role::with('permissions')->find(1);
-
-        // return $permissions;
-
-        // return $client;
-           
         return view('client.show')->with('client', $client)
                                     ->with('userList', $users)
                                     ->with('uniqueUsers', $uniqueUsers);
@@ -103,93 +75,95 @@ class ClientController extends Controller
 
     public function showUser($clientId, $userId)
     {
-        
-        $roles = Role::get();
+    
         $allRoles = Role::get();
-        //Get Cleint with associated User
-       
+        //Get Client with associated User
         $client = Client::with('users')->find($clientId);
         //Select user to display
-        $user = $client->users->where('id', 5);
-
-        // Working
-        // ---------------------------------------------------------------
-
-        foreach($client->users->where('id', 5) as $userRole){
-            // roles[] = $userRole->pivot->permission_role_id;
-        };
-        // dd($roles);
-
-
-        // ---------------------------------------------------------------
-
-
-
-        // dd($user->pivot->permission_role_id);
-        // dd($user);
-        // foreach ($client->users->where('id', $userId) as $user){
-        //     $roles[] = $user->pivot->permission_role_id;
-        // };
-        
-        // dd($roles);
-        //get the Associated permission/role relation
-        // dd($client);
-        $permission_role_id =  1;
-        //get all asssociated permission roles
-        // $permissionRoles = PermissionRole::where('id', $permission_role_id)->get();
-
-        // dd($permissionRoles);
-        // foreach($permissionRoles as $role){
-        //    $ids[] = $role->role_id;
-        // };
-
-        // $roles = Role::with('permissions')->whereIn('id', $ids)->get();
-
-        // dd($roles);
-        // $permission_role_id =  $user->pivot->permission_role_id;
-
-        // $permissionRoles = User::with('roles')->get();
-        // with('roles')->find($permission_role_id);
-        // $roles = Role::with('permissions')->find($permission_role_id);
-        // dd($roles);
+        $userInstances = $client->users->where('id', $userId);
+        //Get client as object
+        $user = $client->users->where('id', $userId)->first();
+        $roleID = $user->pivot->permission_role_id;
+        //Gets all existing role Id's for the user
+        foreach($userInstances as $instance){
+            $userRoles[] = $instance->pivot->permission_role_id;
+        }
 
         return view('client.userShow')->with('client', $client)
                                     ->with('user', $user)
-                                    ->with('allRoles', $allRoles)
-                                    ->with('roles', $roles);
+                                    ->with('users', $userInstances)
+                                    ->with('allRoles', $allRoles)                                
+                                    ->with('userRoles', $userRoles);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function updateUserRoles($clientId, $userId, Request $request)
+    {
+
+        //Gets client
+        $client = Client::find($clientId);
+        //Gets all user instances
+        $userInstances = $client->users->where('id', $userId);
+        //Gets user as object
+        $user = User::find($userId);
+        //Gets all roles
+        $allRoles = Role::get();
+        //Gets all sleceted roles
+        $roleIDs = $request->except('_token');
+
+        //Gets all existing role Id's for the user
+            foreach($userInstances as $instance){
+                $userRoles[] = $instance->pivot->permission_role_id;
+            }
+            foreach($roleIDs as $id => $checked){
+                //Loop through user instances on the client
+                foreach($userInstances as $instance){
+                    //Checks the instance permission_role_id is part of the selected roles, if not, removes it.
+                    if(!array_key_exists($instance->pivot->permission_role_id, $roleIDs)){
+                        $client->users()->wherePivot('permission_role_id', '=', $instance->pivot->permission_role_id)
+                                             ->where('user_id', $userId)
+                                                ->detach();      
+                    }
+                    //Check if user already has the role on the Client instance, if not adds it
+                   $client_user = $instance->pivot->where('permission_role_id', $id)
+                                                    ->where('client_id', $clientId)
+                                                        ->where('user_id', $userId)->first();
+
+                    if($checked && $client_user === NULL){
+                         $client->users()->attach($user, ['permission_role_id'=>$id]);
+                    };
+
+
+                }                          
+            }; 
+
+        return redirect()->route('clientShowUser', ['clientID'=>$clientId, 'userID'=>$userId])->with('client', $client)
+                                    ->with('user', $user)
+                                        ->with('users', $userInstances)
+                                            ->with('allRoles', $allRoles)                                
+                                                ->with('userRoles', $userRoles);
+       
+    }
+
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+
+        $clientId = $request->clientID;
+        $userId = $request->userID;
+        $user = User::find($userId);
+        $client = Client::find($clientId);
+       
+        $client->users()->detach($userId);
+
+        return redirect()->route('showClient', $clientId);
     }
 }

@@ -27,17 +27,5 @@ class Client extends Model
         return $this->belongsToMany(PermissionRole::class, 'permission_roles', 'client_id', 'role_id');
     }
 
-    // public function roles()
-    // {
-    //     return $this->hasManyThrough(
-    //         Role::class,
-    //         Team::class,
-    //         'client_id',
-    //         'user_id',
-    //         'id'
-    //     );
-
-    // }
-
 
 }

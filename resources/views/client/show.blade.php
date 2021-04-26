@@ -3,10 +3,10 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="card col-md-10">
+        <div class="card dark-color-card col-md-10">
             <div class="card-body">
                 <div class="m-2">
-                    <h1>{{$client->name}}</h1>
+                    <h1 >{{$client->name}}</h1>
                 </div>
 
                 
@@ -16,7 +16,7 @@
                         @csrf
                        <div class="mb-4 input-group">                            
                             <select class="custom-select" name="selectedUser" id="selectedUser">
-                                <option disabled selected>User</option>
+                                <option disabled selected>Add new user....</option>
                                 @foreach($userList as $user)
                                     <option value={{$user->id}}>{{$user->name}}</option>
                                 @endforeach
@@ -29,7 +29,7 @@
                                 @endforeach
                                 
                             </select>  --}}
-                           <button id= "addUserToInstance" class="btn btn-primary input-group-append">Add</button></a>
+                           <button id= "addUserToInstance" class=" btn-red btn  input-group-append">Add</button></a>
                        </div>
                     </form>
                 @endif
@@ -49,10 +49,10 @@
   
                             <a href="{{route('clientShowUser',['clientID'=>$client->id,'userID'=>$user->id])}}">
                                 <div class="row border-bottom p-2 hover ">
-                                <div class="col-2 ">{{$user->id}}</div>
+                                <div class="col-2 text-white">{{$user->id}}</div>
                                 <div class="col-7 text-decoration-none">{{$user->name}}</div> 
                                
-                                <div class="col text-muted text-decoration-none">
+                                <div class="col text-white text-decoration-none">
                                     {{$user->pivot->created_at}}
                                 </div>        
                            </div></a>                        
