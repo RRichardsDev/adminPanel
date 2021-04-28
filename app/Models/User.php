@@ -13,7 +13,7 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    public function client()
+    public function clients()
     {
         return $this->belongsToMany(Client::class)
                 ->withPivot(['permission_role_id']);                        

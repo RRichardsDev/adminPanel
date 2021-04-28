@@ -38,6 +38,7 @@ class ClientController extends Controller
         //Gets Client/User
         $user = User::find($userID);
         $client = Client::find($clientID);
+        
         //Checks if user already has an insatnce with the client
         if($client->users()->find($userID) == NULL)
         {
@@ -73,7 +74,7 @@ class ClientController extends Controller
                                             
     }
 
-    public function showUser($clientId, $userId)
+    public function showClientUser($clientId, $userId)
     {
     
         $allRoles = Role::get();

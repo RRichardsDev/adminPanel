@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Client;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 
 class UserController extends Controller
@@ -15,6 +16,15 @@ class UserController extends Controller
     {
         $this->middleware('auth');
     }
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+    }
+
 
     public function index()
     {
@@ -29,7 +39,7 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        
+
         User::create([
             'name' => $request['name'],
             'email' => $request['email'],
@@ -50,13 +60,6 @@ class UserController extends Controller
     {
         $user = User::find($id);
         (isset($request->name)? $name = $request->name : $name = $user->name);
-        // if(isset($request->email)){
-        //     $email = $request->email;
-        //     dd(1);
-        // }else{
-        //     $email = $user->email;
-        //     dd(2);
-        // }
         (isset($request->email)? $email = $request->email : $email = $user->email);
        
         
@@ -67,6 +70,16 @@ class UserController extends Controller
 
         $users = User::get();
         return redirect()->route('listUser')->with('users', $users);
+    }
+
+    public function show($id)
+    {
+
+
+        $user = User::find($id);
+
+
+        return view('user.show')->with('user', $user);
     }
 
     public function destroy(Request $request)

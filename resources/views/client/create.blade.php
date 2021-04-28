@@ -22,7 +22,7 @@
                                 @endforeach
                             </select> 
                             
-                            <select class="custom-select col-4" name="selectedRole" id="selectedRole">
+                            <select class="custom-selectcol-md-4" name="selectedRole" id="selectedRole">
                                 <option disabled selected>Role</option>
                                 @foreach($roles as $role)
                                     <option value={{$role->id}}>{{$role->name}}</option>
@@ -39,7 +39,7 @@
                 <input type="hidden" name="csrf" id="csrf" value="{{csrf_token()}}">
 
                 <div class="text-center">
-                    <button class="btn btn-primary col-4" type="submit">Confirm</button></a>
+                    <button class="btn btn-primarycol-md-4" type="submit">Confirm</button></a>
                 </div>
 
                     

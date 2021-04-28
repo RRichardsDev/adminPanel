@@ -3,10 +3,10 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="card dark-color-card col-md-10">
+        <div class="card col-md-10">
             <div class="card-body">
                 <div class="m-2">
-                    <h1 >{{$client->name}}</h1>
+                    <h1 class="display-4 text-color-red" >{{$client->name}}</h1>
                 </div>
 
                 
@@ -21,38 +21,31 @@
                                     <option value={{$user->id}}>{{$user->name}}</option>
                                 @endforeach
                             </select> 
-                            
-                            {{-- <select class="custom-select col-4" name="selectedRole" id="selectedRole">
-                                <option disabled selected>Role Group</option>
-                                @foreach($roles as $role)
-                                    <option value={{$role->id}}>{{$role->name}}</option>
-                                @endforeach
-                                
-                            </select>  --}}
                            <button id= "addUserToInstance" class=" btn-red btn  input-group-append">Add</button></a>
+                           
                        </div>
                     </form>
                 @endif
                     
-                <h5>Associated users:</h5>
+               
                    <div class="row border-bottom pb-2">
-                            <div class="col-2">ID</div>
-                            <div class="col-7">User</div>
+                            <div class="col-md-2">ID</div>
+                            <div class="col-md-7">User</div>
                             
                             <div class="col">Joined</div>
 
                     </div>
-                    
-                    <div id="clientList" >
+                     
+                    <div id="clientList" class="gray-hover">
                         
                          @foreach($uniqueUsers as $user)
   
                             <a href="{{route('clientShowUser',['clientID'=>$client->id,'userID'=>$user->id])}}">
                                 <div class="row border-bottom p-2 hover ">
-                                <div class="col-2 text-white">{{$user->id}}</div>
-                                <div class="col-7 text-decoration-none">{{$user->name}}</div> 
+                                <div class="col-md-2 text-color-red">{{$user->id}}</div>
+                                <div class="col-md-7 text-dark">{{$user->name}}</div> 
                                
-                                <div class="col text-white text-decoration-none">
+                                <div class="col text-muted text-decoration-none">
                                     {{$user->pivot->created_at}}
                                 </div>        
                            </div></a>                        

@@ -1,77 +1,68 @@
-li b{
-	font-weight: bold;
-	color: black;
-}
 body {
     font-family: 'Quicksand';
-    background-color: rgb(24, 24, 24);
+    background-color: #Ecefef;
 }
 
 a:link { 
 	text-decoration: none; 
 }
-a{
-	color: #db3939;
-}
-a :hover{
-	color: #000;
-}
 
-#landingTitle {
-	font-size: 15rem; 
-	font-family: 'Trebuchet MS';
-}
-#landingVersion {
-	font-size: 1.5rem; 
-	font-family: 'Trebuchet MS'; 
-	color:gray;
-}
-
-#contour {
+.airal-bold {
 	font-family: Arial;
 	font-weight: bold;
 	font-size: 2rem;
 }
-
-#clientList .row:hover{
+.gray-hover a .row:hover{
   background-color: #dcdcdc;
 }
-
-#userList .row:hover{
-  background-color: #dcdcdc;
-}
-
 .btn-red {
     background-color: #db3939;
     color: #fff;
     font-family: "Quicksand",sans-serif;
 }
-.text-color-red{
-	color: #db3939 ;
-}
-.text-color-red-hover a :hover{
-	color: #fff ;
-}
 .btn-red :hover{
     color: #000;
     font-family: "Quicksand",sans-serif;
 }
+.btn-outline-red {
+	border-color: #db3939;
+	color: #db3939;
+}
+.btn-outline-red:hover {
+	background-color: #db3939;
+	color: #fff;
+}
+.text-color-red{
+	color: #db3939 ;
+}
+.red-black-hover:hover{
+	color: #000 ;
+}
 
-.nav-link {
-	color:#fff ;!important
-}
-.dark-bg-color {
-	background-color: #181818;
-}
 .dark-nav-color {
 	background-color: #303030;
+		color:#fff;
+
 }
+.dark-btn {
+	background-color: #303030;
+		color:#fff;
+}
+.dark-btn:hover{
+	color:#db3939;
+}
+
 .btn-outline-color-red {
     color: #db3939;
     border-color: #db3939;
 }
-
+/*.border-thick-bottom{
+	border-bottom: 2px solid #Ecefef;
+}*/
+/*
 .dark-color-card{
 	background-color: #303030;
 	color: #fff;
-}
+	/*background-color: rgb(24, 24, 24);
+	border: none;*/
+}*/

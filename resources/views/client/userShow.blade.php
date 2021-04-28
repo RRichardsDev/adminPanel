@@ -1,21 +1,31 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container"> 
     <div class="row justify-content-center">
-        <div class="card text-white dark-color-card col-md-10">
+        <div class="card dark-color-card col-md-10">
             <div class="card-body">
-                <div class="m-2 text-color-red-hover">
-                    <a href="{{route('showClient', $client->id)}}"><h1 class="display-4">{{$client->name}}</h1></a>
-                    <h2 class="text-white">Permissions - <span class="text-muted"><b> {{$user->name}} </b></span> </h2>
+                <div class="m-2">
+                    <div class="row align-items-center">
+                    <div class="col">
+                        <h1 class="display-4 text-color-red red-black-hover"><a class="text-color-red red-black-hover" href="{{route('showClient', $client->id)}}">{{$client->name}}</a></h1>
+                    </div>
+                        
+                    <div class="text-right col-md-2">
+                         <button id="deleteClientUser" class="btn btn-outline-red text-center">Delete</button>
+                     </div>
+                    </div>
+                    
+
+                    <h2 class="text-dark">Permissions - <span class="text-muted"><b> {{$user->name}} </b></span> </h2>
                     <div class="pt-2 ">
                         <h4 class="text-color-red">Roles</h4>
                         <form action="{{route('updateUserRoles', ['clientID'=>$client->id, 'userID'=>$user->id])}}" method="POST" id="roleSelect">
                             @csrf
-                            <div class="border-top col-12 pt-2 ">
+                            <div class="border-top col-md-12 pt-2 text-dark">
                                 <div class="form-check m-1 d-flex flex-row flex-wrap">
                                     @foreach($allRoles as $roleList)
-                                        <div class="m-y-1 py-2 col-3 .role border-bottom text-white" >
+                                        <div class="m-y-1 py-2 col-md-3 .role border-bottom" >
                                             <input class="form-check-input" name="{{$roleList->id}}" type="checkbox" 
                                                 
 
@@ -28,12 +38,8 @@
                                     @endforeach
                                 </div>  
                             </div> 
-                            <div class="text-center col-12 p-2">
-                                 <button class="btn btn-red col-4 text-center" type="submit">Confirm</button>
-                                 <div class="text-right">
-                                     <button id="deleteClientUser" class="btn btn-red col-1 text-center">X</button>
-                                 </div>
-                                 
+                            <div class="text-center col-md-12 p-2">
+                                 <button class="btn btn-red col-md-4 text-center" type="submit">Confirm</button>
                             </div>
                         </form>
                     </div>

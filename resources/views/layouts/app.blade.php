@@ -53,10 +53,12 @@
                             
                             
                         @else
-                            <li class="nav-item"><a id="navbarDropdown" class="nav-link text-white" href="{{route('listClient')}}">Clients</a></li>
-                            <li class="nav-item"><a id="navbarDropdown" class="nav-link text-white" href="{{route('listUser')}}">Users</a></li>
-                                                        
-                            {{-- <li class="nav-item"><a id="navbarDropdown" class="nav-link" href="{{route('listInstance')}}">Instances</a></li> --}}
+                            <li class="nav-item"><a id="navbarDropdown" class="nav-link text-muted" href="{{route('listClient')}}">Clients</a></li>
+
+                            <li class="nav-item"><a id="navbarDropdown" class="nav-link text-muted" href="{{route('listUser')}}">Users</a></li>
+
+                            <li class="nav-item"><a id="navbarDropdown" class="nav-link text-muted" href="{{route('listRole')}}">Roles</a></li>
+
                             <li class="nav-item"><a id="navbarDropdown" class="nav-link" href="#"> </a></li>
                             <li class="nav-item dropdown">
 
@@ -64,8 +66,11 @@
                                     {{ Auth::user()->name }}
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                <div class="dropdown-menu dropdown-menu-right dark-nav-color" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item text-white" href="{{route('showUser', Auth::user()->id)}}">
+                                        My Clients
+                                    </a>
+                                    <a class="dropdown-item text-white" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}

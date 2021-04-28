@@ -5,44 +5,52 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card dark-color-card">
-                <div class="card-header"><h2><span id="contour">Contour</span> Users</h2></div>
+                <div class="card-header"><h2><span class="airal-bold">Contour</span><span class="text-color-red"> Users</span></h2></div>
 
                 <div class="card-body pt-0">
                 <div class="container-fluid ">
+                    <form id="seachClients">
+                        @csrf
+                       <div class="mb-4 input-group form-group mt-2 pt-2">                            
+                            <input id="userSearchQuery" type="text" class="form-control" placeholder="Search....">
+                            <button id= "searchUsers" class=" btn-red btn  input-group-append">Search</button></a>
+                    </form>
+                            @if(Auth::user()->admin)
+                        <form action="{{route('createUser')}}">
+                            <button class="btn btn-red ml-1 input-group-append">Create User</button>
+                        </form>
+                            @endif 
+                       </div>
                     
-                    @if(Auth::user()->admin)
-                        <div class="m-2 text-right">      
-                            <a href="{{route('createUser')}}"><button class="btn btn-red">Create User</button></a>
-                        </div>
-                    @endif 
                     
                     
-                    <div class="row col-12 border-bottom ">
+                    
+                    <div class="row col-md-12 border-bottom border-dark p-2 mr-0">
         
-                        <div class="col-2">ID</div>
-                        <div class="col-4">Name</div>
-                        <div class="col-5">Email</div>                                
-                        <div class="col-1"></div>
+                        <div class="col-md-1">ID</div>
+                        <div class="col-md-4 text-color-red">Name</div>
+                        <div class="col-md-5 text-color-red">Email</div>                                
+                        
 
                     </div>
-                    <div id="userList" class="row col-12 px-2 mx-2 ">
-
-                        @foreach($users as $user)
-                            <div class="row col-12 border-bottom p-2 hover">
-                                <div class="col-2 nr">{{$user->id}}</div>
-                                <div class="col-4 text-color-red dynamName">{{$user->name}}</div>
-                                <div class="col-5 text-color-red dynamEmail">{{$user->email}}</div>            
-                                <div class="col-1">
-                                    @if(Auth::user()->admin)
-                                        <a href="{{route('editUser',$user->id)}}">
-                                            <button class="btn btn-outline-color-red btn-sm btnEdit " name="edit">Edit</button>
-                                        </a>
-                                    @endif
-                                </div>
-                            </div>
-                        @endforeach
-
+                        
+                        <div id="userList" class="gray-hover" >
+                        
+                            @foreach($users as $user)
+      
+                                <a href="{{route('showUser', $user->id)}}">
+                                    <div class="row border-bottom p-2 hover">
+                                        <div class="col-md-1 text-color-red ">{{$user->id}}</div>
+                                        <div class="col-md-4 text-dark">{{$user->name}}</div>
+                                        <div class="col-md-5 text-dark">{{$user->email}}</div>
+                                   </div>
+                               </a>                        
+                               
+                            @endforeach
                         </div>
+
+
+                        
                     </div>
                     <input id="csrf" type="hidden" value='{{csrf_token()}}'></div>
                 </div>

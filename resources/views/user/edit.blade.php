@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="card col-md-5 dark-color-card">
+        <div class="card col-md-10 dark-color-card">
 
             <div class="card-body">
                 <h1>Edit User</h1>
@@ -19,12 +19,12 @@
                                 
                             
                             <div class="row justify-content-center mt-4">
-                                <div class="col-6 text-center">
-                                    <button type="submit" class='btn btn-primary col-6' value=>Update</button>
+                                <div class="col-md-6 text-center">
+                                    <button type="submit" class='btn btn-primary col-md-6' value=>Update</button>
                                 </div>
 
-                                <div class="col-6 text-center">
-                                    <button id="deleteUser" class='btn btn-danger col-6'>Delete</button>
+                                <div class="col-md-6 text-center">
+                                    <button id="deleteUser" class='btn btn-danger col-md-6'>Delete</button>
                                 </div>
                                 
                                 
@@ -35,7 +35,7 @@
                     <div id="alertDelete"></div>
                 {{-- <div id="confirmAlert" class="alert alert-danger" style="display: none;" role="alert">
                   <p> Confirm deleteing <b>{{$user->name}}</b> from the system! </p>
-                    <div class="text-center"><button class="btn btn-danger col-3" id="confrim">Confim</button></div>
+                    <div class="text-center"><button class="btn btn-dangercol-md-3" id="confrim">Confim</button></div>
                 </div> --}}
                 </div>
             </div>
