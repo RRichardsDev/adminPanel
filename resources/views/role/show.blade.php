@@ -14,7 +14,12 @@
                          @if(Auth::user()->admin)
                             <div class="col-md-2 text-right d-flex">
                                 <a href="{{route('editRole', $role->id)}}"><button class="btn btn-outline-red">Edit</button></a>
-                                 <a><button id="deleteClientUser" class="btn btn-outline-red ml-1">Delete</button> </a>
+                                <form action="{{route('deleteRole', $role->id)}}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <a><button class="btn btn-outline-red ml-1" type="submit">Delete</button> </a>
+                                </form>
+                                 
                             </div>
                         @endif
                     </div>
@@ -22,7 +27,7 @@
                     <p class="text-muted">{{$role->description}}</p>
                     <div class="pt-2 ">
                         <h4 class="text-color-red">Permissions</h4>
-                        <form action="#" method="POST" id="roleSelect">
+                        <form action="{{route('updatePermissionRoles', $role->id)}}" method="POST" id="roleSelect">
                             @csrf
                             <div class="border-top border-dark col-md-12 pt-2 ">
                                 <div class="form-check m-1 d-flex flex-row flex-wrap">

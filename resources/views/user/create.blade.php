@@ -11,32 +11,24 @@
                     <form method="POST" action="{{ route('createUser') }}">
                         @csrf
 
-                        <div class="form-group m-1 row mb-4">
-                            <div class="col-md-5">
-                                <label for="name" class="">{{ __('Name') }}</label>                            
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="col-md-7">
-                                <label for="email" class="">{{ __('E-Mail Address') }}</label>
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                                              
+                        <div class="form-group m-1 mb-4">
+                            <label class="py-1"for="name" >Name</label>
+                            <input id="name" name="name"type="text" class="form-control" placeholder="Example Person">
+                            <label class="py-1"for="selectedStatus">Status</label>
+                                <select class="form-control" name="status" id="selectedStatus">
+                                    <option disabled selected>Select</option>
+                                    @foreach($statuses as $status)
+                                        <option value={{$status->id}}>{{$status->name}}</option>
+                                    @endforeach
+                                </select>          
+                            <label class="py-1"for="email">Email</label>
+                                <input id="email" type="email" name="email" class="form-control " required autocomplete="email" placeholder="example@email.com">
                         </div>
 
-                        <div class="form-group m-1 row mb-4">
+                        <div class="row mb-4">
                             <div class="col-md-6">
                                 <label for="password">{{ __('Password') }}</label>
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <input id="password" name="password"type="password" class="form-control" name="password" required autocomplete="new-password" placeholder="">
                             </div>
                             <div class="col-md-6">
                                 <label for="password-confirm" >{{ __('Confirm Password') }}</label>

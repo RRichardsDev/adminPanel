@@ -30,7 +30,7 @@ class ApiController extends Controller
 
         $search= $request->search;
 
-        $users = User::with('clients')->where('name', 'like', $search . '%')->orderBy('name')->get();
+        $users = User::with('clients','status')->where('name', 'like', $search . '%')->orderBy('name')->get();
 
         return response()->json([
             'users' => $users,
@@ -46,6 +46,19 @@ class ApiController extends Controller
 
         return response()->json([
             'roles' => $roles,
+        ]);
+
+    }
+
+    public function getPermissions(Request $request)
+    {
+
+        $search= $request->search;
+
+        $permissions = Permission::with('permissions')->where('name', 'like', $search . '%')->orderBy('name')->get();
+
+        return response()->json([
+            'permissions' => $permissions,
         ]);
 
     }

@@ -1,6 +1,20 @@
 $( document ).ready(function() {
 
 
+  $('#resetPassword').click(function(e){
+   
+    e.preventDefault(e)
+
+    password = Math.random().toString(36).slice(-8);
+    email = $('#resetPasswordEmail').val()
+
+    $('#showPassword').text(password)
+    copyToClipboard($('#showPassword'))
+    showCountDown()
+    resetPassword(email, password)
+  })
+
+
   $('#searchClients').click(function(e){
      e.preventDefault()
      $search = $('#clientSearchQuery').val()
@@ -34,17 +48,17 @@ $( document ).ready(function() {
               $('#searchRoles').click()
           }
   })
+  $('#searchPermissions').click(function(e){
+     e.preventDefault()
+     $search = $('#permissionSearchQuery').val()
+     searchPermissions($search)
 
-  // $('#addUserToInstance').click(function(){
-  //   setTimeout(
-  //     function() 
-  //     {
-  //      if($('#status')){
-  //         alert(1)
-  //       }
-  //     }, 3000);
-  // })
-
+  })
+  $('#permissionSearchQuery').keypress(function(e){
+          if(e.which == 13){
+              $('#searchPermissions').click()
+          }
+  })
     
    $("#deleteUser").click( function (e) {
     
@@ -175,10 +189,15 @@ function searchUsers(searchQuery) {
        $('#userList').html('')
        $.each(data.users, function(index, user) {
           console.log(user)
+          user.status.id === 0 ? classInject="text-success" : classInject="text-muted"
           $('#userList').append('<a href="/user/'+user.id+'">'+
                                       '<div class="row border-bottom p-2 hover">'+
-                                        '<div class="col-md-3 text-color-red">'+ user.id+ '</div>'+
-                                        '<div class="col-md-8 text-dark">'+user.name+'</div>'+
+                                        '<div class="col-md-1 text-color-red">'+ user.id+ '</div>'+
+                                        '<div class="col-md-4 text-dark">'+user.name+'</div>'+
+                                        '<div class="col-md-5 text-dark">'+user.email+'</div>'+
+                                        '<div class="col-md-2 text-right small '+
+                                          classInject +
+                                         '">'+user.status.name+'</div>'+
                                       '</div>'+
                                     '</a>')
       });
@@ -224,3 +243,60 @@ function searchRoles(searchQuery) {
       }
   })
 }
+function showCountDown(){
+  var n = 15;
+  $( "#showPassword" ).fadeIn( "fast")
+  $( "#showMessage" ).fadeIn( "fast")
+  
+  $('#passwordResetRow').removeClass('pb-2', 'm-2') 
+  $('#passwordResetCol').removeClass('mb-2') 
+  $('#showMessage').text('This password will disappear in '+n+'s.')
+   $('#showCopyMessage').text('Copied to clipboard')
+
+    var tm = setInterval(countDown,1000);
+
+    function countDown(){
+       n--;
+       if(n == 0){
+          clearInterval(tm);
+       }
+        
+        $('#showMessage').text('This password will disappear in '+n+'s.')
+    }
+  $('#passwordResetRow').addClass('pb-2', 'm-2') 
+  $('#passwordResetCol').addClass('mb-2')
+  setTimeout(function(){ 
+
+    $( "#showMessage" ).fadeOut( "slow", function() {})
+
+     $( "#showPassword" ).fadeOut( "slow", function() {
+
+        $('#showPassword').text("")
+        $('#showMessage').text("")
+      })
+  },15000)
+
+  setTimeout(function(){ 
+  $('#showCopyMessage').text('')
+  },3000)
+
+ 
+
+}
+function copyToClipboard(element) {
+  var $temp = $("<input>");
+  $("body").append($temp);
+  $temp.val($(element).text()).select();
+  document.execCommand("copy");
+  $temp.remove();
+}
+function resetPassword(email, password){
+  csrf = $('#csrf').val()
+  id = $('#userID').val()
+
+  $.post( "/user/password/update", { id: id, password: password, _token:csrf} ).done(function(data){
+    console.log(data)
+  });
+}
+
+

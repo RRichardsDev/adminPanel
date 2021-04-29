@@ -12,7 +12,7 @@
                     </div>
                         
                     <div class="text-right col-md-2">
-                         <button id="deleteClientUser" class="btn btn-outline-red text-center">Delete</button>
+                         <button id="deleteClientUser" class="btn btn-outline-red text-center">Remove from Client</button>
                      </div>
                     </div>
                     

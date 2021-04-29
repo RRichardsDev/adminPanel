@@ -23,3 +23,5 @@ Route::get('/clients', [App\Http\Controllers\ApiController::class, 'getClients']
 Route::get('/users', [App\Http\Controllers\ApiController::class, 'getUsers'])->name('apiGetUsers');
 
 Route::get('/roles', [App\Http\Controllers\ApiController::class, 'getRoles'])->name('apiGetRoles');
+
+// Route::get('/user/{$id}/roles', [App\Http\Controllers\ApiController::class, 'getPermissions'])->name('apiGetPermissions');

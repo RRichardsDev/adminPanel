@@ -26,14 +26,11 @@
                             </div>
                         
 
-                    <div class="row border-bottom border-dark col-md-12">
-                        <div class="row col-md-12 p-2 mr-0">
-        
-                        <div class="col-md-1">ID</div>
-                        <div class="col-md-10 ">Name</div>                         
-                        
-
-                    </div>
+                        <div class="row border-bottom border-dark px-2 pb-2">
+                            <div class="row col-md-12 p-2 mr-0">
+                                <div class="col-md-1">ID</div>
+                                <div class="col-md-10 ">Name</div>                         
+                            </div>
                        
                     </div>
                     

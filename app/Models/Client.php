@@ -18,14 +18,15 @@ class Client extends Model
     public function users()
     {
     	return $this->belongsToMany(User::class)
-                ->withTimestamps()
-                ->withPivot(['permission_role_id']);                        
-
+                        ->withTimestamps()
+                            ->withPivot(['permission_role_id']);                        
     }
     public function roles()
     {
         return $this->belongsToMany(PermissionRole::class, 'permission_roles', 'client_id', 'role_id');
     }
+
+
 
 
 }

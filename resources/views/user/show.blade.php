@@ -18,9 +18,18 @@
                                     <button type="submit" class="btn btn-outline-red text-center">Edit</button>
                                 </div>
                                 <div class="row ml-2 pl-3">
-                                    <p class="text-muted">{{$user->email}}</p>
+                                    <p class="text-muted">{{$user->email}}  -</p>
+                                </div>
+                                <div class="row ml-2 pl-3">
+                                    <p class="
+                                    @if($user->status->id === 0)text-success @endif
+                                    @if($user->status->id === 1)text-danger @endif
+                                    @if($user->status->id === 2)text-primary @endif
+                                    @if($user->status->id === 3)text-warning @endif
+                                    ">{{$user->status->name}}</p>
                                 </div>
                             </div>
+
                         </form>
                         
                         	

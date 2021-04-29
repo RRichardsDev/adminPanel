@@ -7,54 +7,38 @@ use App\Models\Client;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Permission;
+use App\Models\PermissionRole;
 
 class RoleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $roles = Role::get();
         return view('role.list')->with('roles', $roles);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('role.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function storeRoll(Request $request)
     {
         $permissions = Permission::get();
+        (isset($request->name)? $name = $request->name : $name = $role->name);
+        (isset($request->description)? $description = $request->description : $description = $role->description);
         $role = Role::create([
                     'name' => $request->name,
                     'description' => $request->description
                 ]);
-        return view('role.show')->with('role',$role)
+
+        $role->permissions()->attach(0);
+
+        return redirect()->route('showRole', $role->id)->with('role',$role)
                                     ->with('permissions',$permissions);
         
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $role = Role::with('permissions')->find($id);
@@ -66,12 +50,6 @@ class RoleController extends Controller
                                     ->with('permissions', $permissions);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $role = Role::with('permissions')->find($id);
@@ -81,27 +59,56 @@ class RoleController extends Controller
                                     ->with('permissions', $permissions);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-         $role = Role::with('permissions')->get($id);
+
+         $role = Role::with('permissions')->find($id);
 
         (isset($request->name)? $name = $request->name : $name = $role->name);
         (isset($request->description)? $description = $request->description : $description = $role->description);
 
+
         $role->update([
             'name' => $name,
-            'description' => $email,
+            'description' => $description,
         ]);
 
-        $roles = Role::get();
-        return redirect()->route('listRole')->with('roles', $roles);
+        $roles = Role::with('permissions')->get();
+        return redirect()->route('showRole', $role->id)->with('roles', $roles);
+    }
+
+    public function updatePermissionRoles(Request $request, $id)
+    {
+
+        $role = Role::with('permissions')->find($id);
+        $allPermissions = Permission::get();
+        $setPermissions = $role->permissions()->get();
+        $permissionIDs = $request->except('_token');
+
+        // For each checked permission
+        foreach($permissionIDs as $pid => $checked){
+            // For each existing role
+
+            foreach ($setPermissions as $existing) {
+                $exists = !empty($role->permissions()->find($pid));
+
+                // If a permission  is attached to a role, but not a checked permission
+                if(!array_key_exists($existing->id, $permissionIDs)){
+                    if($pid != null){
+                     $role->permissions()->wherePivot('permission_id', '=', $pid)
+                                            // ->where('role_id', '=', $existing->id)
+
+                                                ->detach();
+                    }
+                }elseif(!$exists){
+                     $role->permissions()->attach($pid);
+                }
+            }     
+        }
+
+        return redirect()->route('showRole', $id)->with('role', $role)
+                                                    ->with('permissions', $allPermissions);
+       
     }
 
     public function addPermissionToRoll($roleId, $permissonId) 
@@ -112,14 +119,24 @@ class RoleController extends Controller
         $role->permissions()->attach($permission);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy()
-    {
-        //
+    public function destroy($id)
+    {   
+        $clients = Client::with('users')->get();
+        $role = Role::with('permissions')->find($id);
+
+        // Removes all role relations to users
+        foreach($clients as $client){
+            $client->users()->wherePivot('permission_role_id', '=', $id)->detach();
+        }
+
+        foreach($role->permissions as $permission){
+            $role->permissions()->detach($permission->id);
+        }
+
+        $role->delete();
+        
+        $roles = Role::get();
+
+         return redirect()->route('listRole')->with('roles', $roles);
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\PermissionRole;
 use App\Models\ClientUserRole;
+use App\Models\Status;
 
 class User extends Authenticatable
 {
@@ -23,11 +24,16 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(PermissionRole::class, 'client_user', 'user_id', 'permission_role_id');
     }
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
+    }
     
     protected $fillable = [
         'name',
         'email',
         'password',
+        'status_id'
     ];
 
     protected $hidden = [

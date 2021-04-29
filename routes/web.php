@@ -15,6 +15,8 @@ Route::get('user/edit/{userID}', [App\Http\Controllers\UserController::class, 'e
 Route::post('user/edit/{userID}', [App\Http\Controllers\UserController::class, 'update'])->name('updateUser');
 Route::post('user/deleteUser', [App\Http\Controllers\UserController::class, 'destroy'])->name('deleteUser');
 
+Route::post('user/password/update', [App\Http\Controllers\UserController::class, 'updatePassword']);
+
 
 // //Client Routes
 Route::get('/', [App\Http\Controllers\ClientController::class, 'index'])->name('listClient');
@@ -32,6 +34,11 @@ Route::get('/role/store', [App\Http\Controllers\RoleController::class, 'storeRol
 
 Route::get('/role/{roleID}', [App\Http\Controllers\RoleController::class, 'show'])->name('showRole');
 Route::get('/role/edit/{roleID}', [App\Http\Controllers\RoleController::class, 'edit'])->name('editRole');
+Route::patch('/role/edit/{roleID}', [App\Http\Controllers\RoleController::class, 'update'])->name('updateRole');
+Route::delete('/role/delete/{roleID}', [App\Http\Controllers\RoleController::class, 'destroy'])->name('deleteRole');
+
+Route::post('/role/{roleID}/permissions', [App\Http\Controllers\RoleController::class, 'updatePermissionRoles'])
+																						->name('updatePermissionRoles');
 
 
 

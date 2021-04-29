@@ -8,7 +8,7 @@
                 <div class="m-2 text-color-red-hover">
                     <div class="row">
                         <div class="col-md-10">
-                            <h1 class="display-4">Role - <span class="text-color-red">{{$role->name}}</span></h1>
+                            <h1 class="display-4">Rol - <span class="text-color-red">{{$role->name}}</span></h1>
                         </div>
                          
                          <div class="col-md-2 text-right"><button class="btn btn-outline-red">Edit</button></div>
@@ -17,7 +17,7 @@
                     <p class="text-muted">{{$role->description}}</p>
                     <div class="pt-2 ">
                         <h4 class="text-color-red">Permissions</h4>
-                        <form action="#" method="POST" id="roleSelect">
+                        <form action="/role/1/permissions" method="POST" id="roleSelect">
                             @csrf
                             <div class="border-top col-md-12 pt-2 ">
                                 <div class="form-check m-1 d-flex flex-row flex-wrap">

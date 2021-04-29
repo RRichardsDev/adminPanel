@@ -25,7 +25,7 @@
                     
                     
                     
-                    <div class="row col-md-12 border-bottom border-dark p-2 mr-0">
+                    <div class="row border-bottom border-dark px-2 pb-2">
         
                         <div class="col-md-1">ID</div>
                         <div class="col-md-4 text-color-red">Name</div>
@@ -43,18 +43,25 @@
                                         <div class="col-md-1 text-color-red ">{{$user->id}}</div>
                                         <div class="col-md-4 text-dark">{{$user->name}}</div>
                                         <div class="col-md-5 text-dark">{{$user->email}}</div>
+                                        <div class="col-md-2 text-right small
+                                        @if($user->status->id === 0)text-success 
+                                        @else text-muted 
+                                        @endif
+                                         ">{{$user->status->name}}</div>
                                    </div>
                                </a>                        
                                
                             @endforeach
+
                         </div>
-
-
-                        
+                       
                     </div>
+
                     <input id="csrf" type="hidden" value='{{csrf_token()}}'></div>
                 </div>
+                
             </div>
+             
         </div>
     </div>
 </div>
