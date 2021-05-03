@@ -16,7 +16,7 @@ class ClientUser extends Migration
         Schema::create('client_user', function (Blueprint $table) {
             $table->foreignId('client_id')->constrained();
             $table->foreignId('user_id')->constrained();
-            $table->unsignedBigInteger('permission_role_id')->defualt(0);
+            $table->unsignedBigInteger('permission_role_id')->default(0);
             $table->foreign('permission_role_id')->references('role_id')->on('permission_roles');
             $table->timestamps();
         });

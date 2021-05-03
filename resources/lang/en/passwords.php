@@ -14,7 +14,7 @@ return [
     */
 
     'reset' => 'Your password has been reset!',
-    'sent' => 'We have emailed your password reset link!',
+    'sent' => "Your temporary password has been emailed to you. If you don't receive it within a few minutes please check your    junk folder and contact your Account Manager if it hasn't arrived within 15 minutes.",
     'throttled' => 'Please wait before retrying.',
     'token' => 'This password reset token is invalid.',
     'user' => "We can't find a user with that email address.",

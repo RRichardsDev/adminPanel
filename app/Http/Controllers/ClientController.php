@@ -19,8 +19,18 @@ class ClientController extends Controller
 
     public function index()
     {
+        $alert="";
+        $referer = request()->headers->get('referer');
+                    if(strpos ( $referer , 'http://adminpannel.test:8000/password/reset/', 0 ) !== false){
+                        $alert = "Password has been updated!";
+                    }
+        // }
+        
+
+
         $clients = Client::get();
-        return view('client.list')->with('clients', $clients);
+        return view('client.list')->with('clients', $clients)
+                                    ->with('alert', $alert);
                                     
     }
 
@@ -42,7 +52,8 @@ class ClientController extends Controller
         //Checks if user already has an insatnce with the client
         if($client->users()->find($userID) == NULL)
         {
-            $client->users()->attach($user);
+            $client->users()->attach($user, ['permission_role_id' => 1]);
+            
         }else{
             $status = '1';
         };

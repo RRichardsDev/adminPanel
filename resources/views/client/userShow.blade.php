@@ -3,6 +3,10 @@
 @section('content')
 <div class="container"> 
     <div class="row justify-content-center">
+        <div id="confAlert" hidden class="alert alert-danger row col-12" > 
+
+               
+        </div>
         <div class="card dark-color-card col-md-10">
             <div class="card-body">
                 <div class="m-2">
@@ -12,7 +16,7 @@
                     </div>
                         
                     <div class="text-right col-md-2">
-                         <button id="deleteClientUser" class="btn btn-outline-red text-center">Remove from Client</button>
+                         <button id="rmvClientUser" class="btn btn-outline-red text-center">Remove from Client</button>
                      </div>
                     </div>
                     

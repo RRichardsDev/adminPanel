@@ -34,7 +34,7 @@
                         <div id="passwordResetRow" class="m-2 row pb-2">
                            
                             <div class="col-md-6">
-                                <select class="form-control" name="status" id="selectedStatus">
+                                <select class="form-control" name="status" id="selectedStatus"@if(!Auth::user()->admin)disabled @endif>
                                     <option disabled selected>{{$user->status->name}}</option>
                                         @foreach($statuses as $status)
                                             <option value={{$status->id}}>{{$status->name}}</option>

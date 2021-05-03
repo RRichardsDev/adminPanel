@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Role;
 use App\Models\Permission;
 use App\Models\PermissionRole;
+use Illuminate\Support\Facades\Schema;
 
 class RoleController extends Controller
 {
@@ -86,25 +87,26 @@ class RoleController extends Controller
         $permissionIDs = $request->except('_token');
 
         // For each checked permission
-        foreach($permissionIDs as $pid => $checked){
-            // For each existing role
+            foreach($permissionIDs as $pid => $checked){
+                // For each existing role
+                foreach ($setPermissions as $existing) {
+                    $exists = !empty($role->permissions()->find($pid));
+                    // If a permission  is attached to a role, but not a checked permission
+                    if(!array_key_exists($existing->id, $permissionIDs)){
+                        if(count($setPermissions) !== 1){
+                            Schema::disableForeignKeyConstraints();       
+                            $permission = $role->permissions->where('id', $existing->id);
+                            $role->permissions()->detach($permission);
+                            Schema::enableForeignKeyConstraints();
+                        }
+                        
+                        
+                    }elseif(!$exists){
 
-            foreach ($setPermissions as $existing) {
-                $exists = !empty($role->permissions()->find($pid));
-
-                // If a permission  is attached to a role, but not a checked permission
-                if(!array_key_exists($existing->id, $permissionIDs)){
-                    if($pid != null){
-                     $role->permissions()->wherePivot('permission_id', '=', $pid)
-                                            // ->where('role_id', '=', $existing->id)
-
-                                                ->detach();
+                        $role->permissions()->attach($pid);
                     }
-                }elseif(!$exists){
-                     $role->permissions()->attach($pid);
-                }
-            }     
-        }
+                }     
+            }
 
         return redirect()->route('showRole', $id)->with('role', $role)
                                                     ->with('permissions', $allPermissions);

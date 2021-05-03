@@ -14,7 +14,7 @@ class AddStatusColumnToUser extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-              $table->foreignId('status_id')->constrained()->nullable();
+              $table->foreignId('status_id')->constrained();
         });
     }
 
@@ -26,7 +26,8 @@ class AddStatusColumnToUser extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign('statuses_user_id_foreign');
+            $table->dropForeign('users_status_id_foreign');
+             $table->dropColumn('status_id');
         });
     }
 }

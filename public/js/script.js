@@ -1,6 +1,14 @@
 $( document ).ready(function() {
 
 
+  alertbox = $('#alertBox')
+
+  if(alertbox.text() != null){
+    setTimeout(function(){ 
+      $( "#alertBox" ).hide();
+
+  },5000)
+  }
   $('#resetPassword').click(function(e){
    
     e.preventDefault(e)
@@ -77,7 +85,7 @@ $( document ).ready(function() {
       $('#editUserForm').attr('action', "/user/deleteUser").submit();
    })
 
-    $("#deleteClientUser").click( function (e) {
+$(document).on('click','#deleteClientUser',function(e){
     
           e.preventDefault(e)
 
@@ -90,7 +98,6 @@ $( document ).ready(function() {
 })
 
 
-
 function confirmDeleteUser(username){
   if(!$('#confirmAlert').length){
     $('#alertDelete').append('<div id="confirmAlert" class="alert alert-danger" role="alert"> \
@@ -101,6 +108,16 @@ function confirmDeleteUser(username){
   }
   
 }
+ $('#rmvClientUser').click(function(e){
+      e.preventDefault()
+      $('#confAlert').removeAttr( 'hidden' )
+      $('#confAlert').append(' <div class="col-md-11">'+
+                'Are you sure you want to <b>remove</b> the user from this client, disabling all of their roles and revoing permissions?'+
+            '</div>'+
+            '<div class="col-md-1">'+
+                 '<button class="btn btn-red" id="deleteClientUser"> Confirm</button>'+
+            '</div>')
+ })
 
 function deleteClientUser(clientID, userID) {
    csrf = $('#csrf').val()
