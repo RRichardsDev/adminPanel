@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Schema;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         $roles = Role::get();
@@ -25,6 +29,10 @@ class RoleController extends Controller
 
     public function storeRoll(Request $request)
     {
+        $validated = $request->validate([
+            'name' => 'required',
+            'description' => 'required|max:255',
+        ]);
         $permissions = Permission::get();
         (isset($request->name)? $name = $request->name : $name = $role->name);
         (isset($request->description)? $description = $request->description : $description = $role->description);

@@ -14,14 +14,20 @@
                          <div class="m-2 row">
                             <div class="col-md-12">
                                 <label for="name">Name</label>
-                                <input class="form-control" type="text" name="name" id="editUserName" value="{{$user->name}}">
+                                <input class="form-control" type="text" name="name" id="editUserName"
+                                @if(!Auth::user()->admin && Auth::user()->id != $user->id) disabled @endif
+                                 value="{{$user->name}}">
+                                 @error('name')<small class="form-text text-danger">{{$message}}</small>@enderror
                             </div>
                             
                          </div>   
                         <div class="m-2 row">
                             <div class="col-md-12">
                                 <label for="email">Email address</label>
-                                <input class="form-control" type="email" name="email" id="resetPasswordEmail" value="{{$user->email}}">
+                                <input class="form-control" type="email" name="email" id="resetPasswordEmail" 
+                                @if(!Auth::user()->admin && Auth::user()->id != $user->id) disabled @endif
+                                value="{{$user->email}}">
+                                 @error('email')<small class="form-text text-danger">{{$message}}</small>@enderror
                             </div>
                             
                         </div>
@@ -35,12 +41,14 @@
                            
                             <div class="col-md-6">
                                 <select class="form-control" name="status" id="selectedStatus"@if(!Auth::user()->admin)disabled @endif>
-                                    <option disabled selected>{{$user->status->name}}</option>
+                                    <option disabled value="{{$user->status->id}}" selected>{{$user->status->name}}</option>
                                         @foreach($statuses as $status)
-                                            <option value={{$status->id}}>{{$status->name}}</option>
+                                            <option value="{{$status->id}}">{{$status->name}}</option>
                                         @endforeach
                                 </select>
+                                 @error('email')<small class="form-text text-danger">{{$message}}</small>@enderror
                             </div>
+
                             <div id ="passwordResetCol"class="col-md-6 mb-2"> 
                                 @if(Auth::user()->admin)
                                 <div class="row">
@@ -63,10 +71,12 @@
                                 <div class="m-2 row">
 
                                     <div class="col-md-6">
-                                        <input type="password" class="form-control" placeholder="Password">
+                                        <input name="password"type="password" class="form-control" placeholder="Password">
+                                         @error('password')<small class="form-text text-danger">{{$message}}</small>@enderror
                                     </div>
+
                                     <div class="col-md-6">
-                                        <input type="password" class="form-control" placeholder="Confirm Password">
+                                        <input name="password_confirmation"type="password" class="form-control" placeholder="Confirm Password">
                                     </div>
                                 </div>
                             @endif                   

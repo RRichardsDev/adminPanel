@@ -15,17 +15,20 @@
                                      <h1><b>{{$user->name}}</b><span class="text-muted"> - Clients</span> </h1>
                                 </div>
                                 <div class="col-md-1">
+                                    @if(Auth::user()->admin || Auth::user()->id == $user->id)
                                     <button type="submit" class="btn btn-outline-red text-center">Edit</button>
+
+                                    @endif
                                 </div>
                                 <div class="row ml-2 pl-3">
                                     <p class="text-muted">{{$user->email}}  -</p>
                                 </div>
                                 <div class="row ml-2 pl-3">
                                     <p class="
-                                    @if($user->status->id === 0)text-success @endif
-                                    @if($user->status->id === 1)text-danger @endif
-                                    @if($user->status->id === 2)text-primary @endif
-                                    @if($user->status->id === 3)text-warning @endif
+                                    @if($user->status->id === 1)text-success @endif
+                                    @if($user->status->id === 2)text-danger @endif
+                                    @if($user->status->id === 3)text-primary @endif
+                                    @if($user->status->id === 4)text-warning @endif
                                     ">{{$user->status->name}}</p>
                                 </div>
                             </div>

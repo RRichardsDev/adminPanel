@@ -7,7 +7,7 @@ $( document ).ready(function() {
     setTimeout(function(){ 
       $( "#alertBox" ).hide();
 
-  },5000)
+  },25000)
   }
   $('#resetPassword').click(function(e){
    
@@ -71,13 +71,8 @@ $( document ).ready(function() {
    $("#deleteUser").click( function (e) {
     
       e.preventDefault(e)
-      
-      if(($('#userName').val()))
-      {
-        userName = $('#userName').val()
-      }else{
-        userName = $('#editUserName').attr('placeholder')
-      }
+       userName = $('#editUserName').val()
+
       confirmDeleteUser(userName);
 })
 
@@ -100,7 +95,7 @@ $(document).on('click','#deleteClientUser',function(e){
 
 function confirmDeleteUser(username){
   if(!$('#confirmAlert').length){
-    $('#alertDelete').append('<div id="confirmAlert" class="alert alert-danger" role="alert"> \
+    $('#alertDelete').append('<div id="confirmAlert" class="alert alert-danger pt-2 mt-4 text-center" role="alert"> \
                               <p> Confirm deleteing <b>'+ userName +'</b> from the system! </p>\
                                 <div class="text-center"><button class="btn btn-danger col-3" id="confrimDelete">Confim</button></div>\
                                 </div>'
@@ -111,13 +106,27 @@ function confirmDeleteUser(username){
  $('#rmvClientUser').click(function(e){
       e.preventDefault()
       $('#confAlert').removeAttr( 'hidden' )
-      $('#confAlert').append(' <div class="col-md-11">'+
+      $('#confAlert').append(' <div class="col-md-10">'+
                 'Are you sure you want to <b>remove</b> the user from this client, disabling all of their roles and revoing permissions?'+
             '</div>'+
             '<div class="col-md-1">'+
                  '<button class="btn btn-red" id="deleteClientUser"> Confirm</button>'+
             '</div>')
  })
+
+  $('#rmvRole').click(function(e){
+      e.preventDefault()
+      $('#confAlert').removeAttr( 'hidden' )
+      $('#confAlert').append(' <div class="col-md-10">'+
+                'Are you sure you want to <b>remove</b> the user from this client, disabling all of their roles and revoing permissions?'+
+            '</div>'+
+            '<div class="col-md-2">'+
+                 '<button class="btn btn-red" id="deleteRoleConf"> Confirm</button>'+
+            '</div>')
+ })
+$(document).on('click','#deleteRoleConf',function(e){
+    $('#deleteRole').submit()
+})
 
 function deleteClientUser(clientID, userID) {
    csrf = $('#csrf').val()
@@ -315,5 +324,45 @@ function resetPassword(email, password){
     console.log(data)
   });
 }
+
+$('#searchClientUser').click(function(e){
+  e.preventDefault()
+  search =$('#clientUserSearchQuery').val()
+  clientId = $('#clientID').val()
+  userId = $('#userID').val()
+
+  csrf = $('#csrf').val()
+  $.get( "/api/client/"+clientId+"/user/"+userId, { _token:csrf, search:search} ).done(function( data ) {
+
+    console.log(data.allRoles)
+    dispalyRoleSearch(data)
+    });
+
+})
+
+function dispalyRoleSearch(data){
+  $('#roleList').html("")
+  console.log(data)
+  if(data && data !=""){
+    $.each(data.userRoles, function(index, userRole){
+      $.each( data.allRoles, function(index, allRole){
+        
+          if(allRole.id == userRole.id){
+            check="checked"
+          }else{
+            check=""
+          }
+            $('#roleList').append(
+                '<div class="m-y-1 py-2 col-md-3 .role border-bottom" >'+
+                  '<input class="form-check-input" name="'+allRole.id+'" type="checkbox"'+ check+'>'+
+                  '<label class="form-check-label" for="flexCheckDefault">'+allRole.name+'</label>'+
+                '</div>')
+        })
+      })
+    }else{
+       $('#roleList').append('<div class="text-muted"><p>No roles found matching that name</p></div>')
+    }
+}
+
 
 

@@ -3,10 +3,7 @@
 @section('content')
 <div class="container"> 
     <div class="row justify-content-center">
-        <div id="confAlert" hidden class="alert alert-danger row col-12" > 
-
-               
-        </div>
+        <div id="confAlert" hidden class="alert alert-danger row col-10" >    </div>
         <div class="card dark-color-card col-md-10">
             <div class="card-body">
                 <div class="m-2">
@@ -15,25 +12,35 @@
                         <h1 class="display-4 text-color-red red-black-hover"><a class="text-color-red red-black-hover" href="{{route('showClient', $client->id)}}">{{$client->name}}</a></h1>
                     </div>
                         
-                    <div class="text-right col-md-2">
-                         <button id="rmvClientUser" class="btn btn-outline-red text-center">Remove from Client</button>
-                     </div>
+                    @if(Auth::user()->admin)
+                        <div class="text-right col-md-2">
+                             <button id="rmvClientUser" class="btn btn-outline-red text-center">Remove from Client</button>
+                         </div>
+                    @endif
                     </div>
                     
 
                     <h2 class="text-dark">Permissions - <span class="text-muted"><b> {{$user->name}} </b></span> </h2>
+
+                    <div class="mb-4 input-group form-group">                    
+                        <input id="clientUserSearchQuery" type="text" class="form-control" placeholder="Search....">
+                        <button id= "searchClientUser" class=" btn-red btn  input-group-append">Search</button></a>
+                   </div>
+               {{--     <form> <button id="searchClientUser">test</button></form> --}}
+                  
                     <div class="pt-2 ">
                         <h4 class="text-color-red">Roles</h4>
                         <form action="{{route('updateUserRoles', ['clientID'=>$client->id, 'userID'=>$user->id])}}" method="POST" id="roleSelect">
                             @csrf
                             <div class="border-top col-md-12 pt-2 text-dark">
-                                <div class="form-check m-1 d-flex flex-row flex-wrap">
+                                <div id="roleList"class="form-check m-1 d-flex flex-row flex-wrap">
                                     @foreach($allRoles as $roleList)
                                         <div class="m-y-1 py-2 col-md-3 .role border-bottom" >
-                                            <input class="form-check-input" name="{{$roleList->id}}" type="checkbox" 
+                                            <input class="form-check-input" @if(!Auth::user()->admin)disabled @endif name="{{$roleList->id}}" type="checkbox" 
                                                 
 
                                                 @foreach($userRoles as $role)
+                                                
                                                     {{  ($role === $roleList->id ? ' checked' : '') }}
                                                 @endforeach>
 

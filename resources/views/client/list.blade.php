@@ -4,7 +4,21 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            @if($alert)<div id="alertBox" class="card mb-2  p-1 alert alert-success text-center none" >{{$alert}}</div>@endif
+            @if($alert)
+            <div id="alertBox" class="card mb-2  p-1 alert alert-success none" >
+                <div class="row pl-2 pt-1">
+                    <div class="col-md-10 align-middle">
+                     <b>{{$alert}}</b>
+                    </div>
+                   <div class="col-md-2 text-right">
+                        <form action="{{route('editUser', Auth::user()->id)}}">
+                            <button class="btn btn-outline-success ">Reset</button>
+                        </form>
+                    </div>
+                </div>
+                
+            </div>
+            @endif
             <div class="card dark-color-card">
                 <div class="card-header"><h2><span class="airal-bold">Contour</span><span class="text-color-red"> Clients</span></h2></div>                
                 <div class="card-body">

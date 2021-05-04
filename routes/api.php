@@ -24,4 +24,6 @@ Route::get('/users', [App\Http\Controllers\ApiController::class, 'getUsers'])->n
 
 Route::get('/roles', [App\Http\Controllers\ApiController::class, 'getRoles'])->name('apiGetRoles');
 
+Route::get('/client/{clientId}/user/{userId}', [App\Http\Controllers\ApiController::class, 'searchRoles'])->name('apiSearchRoles');
+
 // Route::get('/user/{$id}/roles', [App\Http\Controllers\ApiController::class, 'getPermissions'])->name('apiGetPermissions');

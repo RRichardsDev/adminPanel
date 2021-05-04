@@ -44,7 +44,7 @@
                                         <div class="col-md-4 text-dark">{{$user->name}}</div>
                                         <div class="col-md-5 text-dark">{{$user->email}}</div>
                                         <div class="col-md-2 text-right small
-                                        @if($user->status->id === 0)text-success 
+                                        @if($user->status->id === 1)text-success 
                                         @else text-muted 
                                         @endif
                                          ">{{$user->status->name}}</div>

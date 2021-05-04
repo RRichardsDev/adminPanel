@@ -21,9 +21,9 @@ class ClientController extends Controller
     {
         $alert="";
         $referer = request()->headers->get('referer');
-                    if(strpos ( $referer , 'http://adminpannel.test:8000/password/reset/', 0 ) !== false){
-                        $alert = "Password has been updated!";
-                    }
+            if(strpos ( $referer , 'http://adminpannel.test:8000/password/reset/', 0 ) !== false){
+                $alert = "Password has been updated! - Please reset by editing your profile";
+            }
         // }
         
 

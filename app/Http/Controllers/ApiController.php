@@ -25,6 +25,36 @@ class ApiController extends Controller
         ]);
 
     }
+    public function searchRoles($clientId, $userId, Request $request)
+    {
+
+
+        $search= $request->search;
+
+        $allRoles = Role::get();
+        //Get Client with associated User
+        $client = Client::with('users')->find($clientId);
+        //Select user to display
+        $userInstances = $client->users->where('id', $userId);
+
+
+        //Get client as object
+        $user = $client->users->where('id', 5)->first();
+        //Gets all existing role Id's for the user
+        foreach($userInstances as $instance){
+            $userRoles[] = Role::find($instance->pivot->permission_role_id);
+        }
+
+        $roles = Role::with('permissions')->where('name', 'like', $search . '%')->orderBy('name')->get();
+        $roles = $roles->unique();
+
+        return response()->json([
+            'userRoles' => $userRoles,
+            'allRoles' => $roles,
+        ]);
+
+
+    }
     public function getUsers(Request $request)
     {
 

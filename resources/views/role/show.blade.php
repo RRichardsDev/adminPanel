@@ -3,6 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
+        <div id="confAlert" hidden class="alert alert-danger row col-10" ></div>
         <div class="card dark-color-card col-md-10">
             <div class="card-body">
                 <div class="m-2 text-color-red-hover">
@@ -14,10 +15,10 @@
                          @if(Auth::user()->admin)
                             <div class="col-md-2 text-right d-flex">
                                 <a href="{{route('editRole', $role->id)}}"><button class="btn btn-outline-red">Edit</button></a>
-                                <form action="{{route('deleteRole', $role->id)}}" method="POST">
+                                <form id="deleteRole"action="{{route('deleteRole', $role->id)}}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <a><button class="btn btn-outline-red ml-1" type="submit">Delete</button> </a>
+                                    <a><button id ="rmvRole"class="btn btn-outline-red ml-1" type="submit">Delete</button> </a>
                                 </form>
                                  
                             </div>
