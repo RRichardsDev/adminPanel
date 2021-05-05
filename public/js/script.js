@@ -9,6 +9,15 @@ $( document ).ready(function() {
 
   },25000)
   }
+
+  $('#btnSearchUsersToAdd').click(function(e){
+    e.preventDefault()
+    search =  $('#txtSearchUsersToAdd').val()
+
+    searchUsersToAdd(search)
+
+  })
+
   $('#resetPassword').click(function(e){
    
     e.preventDefault(e)
@@ -77,7 +86,15 @@ $( document ).ready(function() {
 })
 
    $(document.body).on('click',"#confrimDelete",function(){
-      $('#editUserForm').attr('action', "/user/deleteUser").submit();
+      alert('This will disable all user assets, and may break essential systems. E.g. Live Email, Live SMS, Custom Extracts1....')
+      confrimDeleteInput = prompt('Type DELETE to confirm user deletion!')
+      if(confrimDeleteInput == "DELETE"){
+         $('#editUserForm').attr('action', "/user/deleteUser").submit()
+      }else
+      {
+        alert('Deletion not confirmed. User has not been deleted.')
+      }
+     
    })
 
 $(document).on('click','#deleteClientUser',function(e){
@@ -316,6 +333,36 @@ function copyToClipboard(element) {
   document.execCommand("copy");
   $temp.remove();
 }
+function searchUsersToAdd(search){
+  $.get( "/api/users/search", { search: search} ).done(function(data){
+     $('#selectedUser').html('')
+
+     $('#selectedUser').append('<option>Search Results</option>')
+    $.each(data.users, function(index, user) {
+      $('#selectedUser').append('<option value="'+user.id+'">'+user.name+'</option>')
+    })
+
+    $('#selectedUser').addClass('border border-success')
+
+      setTimeout(function(){ 
+          $('#selectedUser').removeClass('border border-success')
+
+      },5000)
+  })
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 function resetPassword(email, password){
   csrf = $('#csrf').val()
   id = $('#userID').val()

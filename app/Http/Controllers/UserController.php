@@ -8,6 +8,7 @@ use App\Models\Client;
 use App\Models\Status;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use App\Rules\lowercase;
 
 
 class UserController extends Controller
@@ -17,14 +18,14 @@ class UserController extends Controller
     {
         $this->middleware('auth');
     }
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
-    }
+    // protected function validator(array $data)
+    // {
+    //     return Validator::make($data, [
+    //         'name' => ['required', 'string', 'max:255'],
+    //         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+    //         'password' => ['required', 'string', 'min:8', 'confirmed'],
+    //     ]);
+    // }
 
 
     public function index()
@@ -42,9 +43,10 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        // ^[a-z 0-9]+\.[a-z 0-9]+@[a-zA-Z]+\.[a-zA-Z\.]+$
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', new lowercase],
             'status' => ['required'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);

@@ -22,6 +22,8 @@ Route::get('/clients', [App\Http\Controllers\ApiController::class, 'getClients']
 
 Route::get('/users', [App\Http\Controllers\ApiController::class, 'getUsers'])->name('apiGetUsers');
 
+Route::get('/users/search', [App\Http\Controllers\ApiController::class, 'searchUsers'])->name('apiSearchUsers');
+
 Route::get('/roles', [App\Http\Controllers\ApiController::class, 'getRoles'])->name('apiGetRoles');
 
 Route::get('/client/{clientId}/user/{userId}', [App\Http\Controllers\ApiController::class, 'searchRoles'])->name('apiSearchRoles');

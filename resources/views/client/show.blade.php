@@ -5,13 +5,44 @@
     <div class="row justify-content-center">
         <div class="card col-md-10">
             <div class="card-body">
-                <div class="m-2">
+               {{-- <form id="addUserToInstanceForm" method="post" action="{{route('clientAddUser', ['clientID'=>$client->id])}}"> --}}
+                <div class="m-2 row">
+
+                  <div class="col-md-8 px-0">
                     <h1 class="display-4 text-color-red" >{{$client->name}}</h1>
+                  </div>
+
+                  
                 </div>
+              </form>
+                  
+                    
+              
 
                 
                <div class="p-2">
+                <form id="searchUsersToAdd" method="post" action="#">
+                <div class="row p-2">                  
+                    <div class="input-group offset-md-8 col-md-4 p-1">
+                      @csrf                     
+                      <input id ="txtSearchUsersToAdd"type="text" class="form-control" placeholder="Search users to add">
+                      <button id= "btnSearchUsersToAdd" class=" btn-red btn input-group-append ">Search</button></a>
+                    </div>                  
+                </div>
+                </form>
                @if(Auth::user()->admin)
+               
+                 {{-- <form id="addUserToInstanceForm" method="post" action="{{route('clientAddUser', ['clientID'=>$client->id])}}">
+                  @csrf
+                  <div class="col-md-6 pl-0">
+                     <div class="mb-4 input-group">                            
+                        <input type="text" class="form-control" placeholder="Search users...">
+                       <button id= "addUserToInstance" class=" btn-red btn input-group-append ">Search</button></a>
+                     </div>
+                   </div>
+                </form> --}}
+               
+               
                 <form id="addUserToInstanceForm" method="post" action="{{route('clientAddUser', ['clientID'=>$client->id])}}">
                         @csrf
                        <div class="mb-4 input-group">                            

@@ -25,6 +25,16 @@ class ApiController extends Controller
         ]);
 
     }
+    public function searchUsers(Request $request)
+    {
+        $search= $request->search;
+
+        $users = User::where('name', 'like', '%' . $search . '%')->get();
+
+        return response()->json([
+            'users' => $users,
+        ]);
+    }
     public function searchRoles($clientId, $userId, Request $request)
     {
 

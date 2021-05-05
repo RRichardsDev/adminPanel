@@ -18,14 +18,14 @@
 
                             <label class="py-1"for="selectedStatus">Status</label>
                             <select class="form-control @error('status') is-invalid @enderror" name="status" id="selectedStatus" >
-                                <option disabled selected>Select</option>
+                                <option value="{{ old('status') }}" disabled selected>Select</option>
                                 @foreach($statuses as $status)
-                                    <option value={{$status->id}}>{{$status->name}}</option>
+                                    <option @if(old('status') == $status->id) selected @endif value={{$status->id}}>{{$status->name}}</option>
                                 @endforeach
                             </select>
                              @error('status')<small class="form-text text-danger">{{$message}}</small>@enderror 
                             <label class="py-1"for="email">Email</label>
-                                <input id="email" type="email" name="email" class="form-control @error('email') is-invalid @enderror" required autocomplete="email" placeholder="example@email.com" value="{{ old('name') }}">
+                                <input id="email" type="email" name="email" class="form-control @error('email') is-invalid @enderror" required autocomplete="email" placeholder="example@email.com" value="{{ old('email') }}">
                                  @error('email')<small class="form-text text-danger">{{$message}}</small>@enderror
                         </div>
 

@@ -4,11 +4,11 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <div class="card dark-color-card">
+            <div class="card">
                 <div class="card-header"><h2><span class="airal-bold">Contour</span><span class="text-color-red"> Roles</span></h2></div>
 
                 <div class="card-body pt-0">
-                <div class="container-fluid ">
+                <div class="container-fluid "> 
 
                                                 
                         
