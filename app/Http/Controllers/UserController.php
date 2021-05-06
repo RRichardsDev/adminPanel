@@ -85,7 +85,7 @@ class UserController extends Controller
         (isset($request->status)? $status = $request->status : $status = $user->status);
         
 
-        $user->update([
+        $user->update([ 
             'name' => $name,
             'email' => $email,
             'status_id' => $status,
