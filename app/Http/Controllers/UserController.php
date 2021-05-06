@@ -89,7 +89,7 @@ class UserController extends Controller
             'status_id' => $status,
         ]);
 
-        $users = User::with('status')->get();
+        $users = User::with('status')->get(); 
         return redirect()->route('listUser')->with('users', $users);
     }
 
