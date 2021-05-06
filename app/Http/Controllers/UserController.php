@@ -74,22 +74,30 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-        //     'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
-        //     'status' => ['required'],
+            'status' => ['required'],
             
         ]);
         $user = User::find($id);
         (isset($request->name)? $name = $request->name : $name = $user->name);
         (isset($request->email)? $email = $request->email : $email = $user->email);
         (isset($request->status)? $status = $request->status : $status = $user->status);
-
         
+
         $user->update([
             'name' => $name,
             'email' => $email,
             'status_id' => $status,
         ]);
+
+        if(isset($request->password)){
+
+            $validated = $request->validate([
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+            ]);
+            $user->update(['password' =>  Hash::make($request->password)]);
+        }
 
         $users = User::with('status')->get();
         return redirect()->route('listUser')->with('users', $users);

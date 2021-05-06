@@ -8,7 +8,7 @@
             <div class="card-body">
                 <h1>Edit User</h1>
                 <div class="row"></div>
-                    <form id="editUserForm"method="post" action="{{route('updateUser',$user->id)}}">
+                    <form novalidate id="editUserForm"method="post" action="{{route('updateUser',$user->id)}}">
                         <input type="hidden" id="userID" name="id"value={{$user->id}}>
                         @csrf     
                          <div class="m-2 row">
@@ -43,10 +43,11 @@
                                 <select class="form-control" name="status" id="selectedStatus"@if(!Auth::user()->admin)disabled @endif>
                                     <option disabled value="{{$user->status->id}}" selected>{{$user->status->name}}</option>
                                         @foreach($statuses as $status)
-                                            <option value="{{$status->id}}">{{$status->name}}</option>
+                                            <option @if($status->id == $user->status_id)selected @endif
+                                             value="{{$status->id}}">{{$status->name}}</option>
                                         @endforeach
                                 </select>
-                                 @error('email')<small class="form-text text-danger">{{$message}}</small>@enderror
+                                 @error('status')<small class="form-text text-danger">{{$message}}</small>@enderror
                             </div>
 
                             <div id ="passwordResetCol"class="col-md-6 mb-2"> 
@@ -68,10 +69,10 @@
                         </div>
                         @if(Auth::user()->id === $user->id)
                          <div class="m-2 row border-top pt-4"><div class="col-md-12"><label for="selectedStatus">Change password</label></div></div>
-                                <div class="m-2 row">
+                                <div class="m-2 row"> 
 
                                     <div class="col-md-6">
-                                        <input name="password"type="password" class="form-control" placeholder="Password">
+                                        <input name="password" type="password" class="form-control" placeholder="Password">
                                          @error('password')<small class="form-text text-danger">{{$message}}</small>@enderror
                                     </div>
 
